@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="../js/css/bootstrap.min.css">
+    <title>Modal</title>
+    <style>
+      #tall {
+        height: 1500px;
+        width: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mt-3">
+      <h1>Modal <small>Bootstrap Visual Test</small></h1>
+<!-- -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            </div>
+
+            <div class="modal-body">
+              <h4>Text in a modal</h4>
+              <hr>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+      <div class="modal fade" id="firefoxModal" tabindex="-1" role="dialog" aria-labelledby="firefoxModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="modal-title" id="firefoxModalLabel">Firefox Bug Test</h4>
+            </div>
+            <div class="modal-body">
+              <ol>
+                <li>Ensure you're using Firefox.</li>
+                <li>Open a new tab and then switch back to this tab.</li>
+                <li>Click into this input: <input type="text" id="ff-bug-input"></li>
+                <li>Switch to the other tab and then back to this tab.</li>
+              </ol>
+              <p>Test result: <strong id="ff-bug-test-result"></strong></p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+<!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+        Launch demo modal
+      </button>
+
+      <button type="button" class="btn btn-primary btn-lg" id="tall-toggle">
+        Toggle tall &lt;body&gt; content
+      </button>
+
+      <br><br>
+
+      <button type="button" class="btn btn-secondary btn-lg" data-toggle="modal" data-target="#firefoxModal">
+        Launch Firefox bug test modal
+      </button>
+      (<a href="https://github.com/twbs/bootstrap/issues/18365">See Issue #18365</a>)
+
+      <br><br>
+
+      <div class="bg-inverse text-white p-2" id="tall" style="display: none;">
+        Tall body content to force the page to have a scrollbar.
+      </div>
+    </div>
+
+    <script src="../js/jquery-slim.min.js"></script>
+    <script src="../js/tether.min.js"></script>
+    <script src="../js/util.js"></script>
+    <script src="../js/modal.js"></script>
+    <script src="../js/collapse.js"></script>
+    <script src="../js/tooltip.js"></script>
+    <script src="../js/popover.js"></script>
+
+    <script>
+      var firefoxTestDone = false
+      function reportFirefoxTestResult(result) {
+        if (!firefoxTestDone) {
+          $('#ff-bug-test-result')
+            .addClass(result ? 'text-success' : 'text-danger')
+            .text(result ? 'PASS' : 'FAIL')
+        }
+      }
+
+      // Should throw an error because modal is in transition
+      function testModalTransitionError() {
+        var err = false
+        // Close #myModal
+        $('#myModal').on('shown.bs.modal', function () {
+          $('#myModal').modal('hide').off('shown.bs.modal')
+          if (!err) {
+            alert('No error thrown for : testModalTransitionError')
+          }
+        })
+
+        try {
+          $('#myModal').modal('show').modal('hide')
+        }
+        catch (e) {
+          err = true
+          console.error(e.message)
+        }
+      }
+
+      $(function () {
+        $('[data-toggle="popover"]').popover()
+        $('[data-toggle="tooltip"]').tooltip()
+
+        $('#tall-toggle').click(function () {
+          $('#tall').toggle()
+        })
+
+        $('#ff-bug-input').one('focus', function () {
+          $('#firefoxModal').on('focus', reportFirefoxTestResult.bind(false))
+          $('#ff-bug-input').on('focus', reportFirefoxTestResult.bind(true))
+        })
+        testModalTransitionError()
+      })
+    </script>
+  </body>
+</html>

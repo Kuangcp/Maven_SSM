@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myth.book">
+
+    <select id="login" parameterType="map" resultType="Long">
+        select login(#{email},#{password})
+    </select>
+    <!--
+       用户的操作SQL
+    -->
+    <insert id="insert_Users" parameterType="Users">
+        insert into users(name, sex, birthday, password, email) values(#{name},#{sex},#{birthday},#{password},#{email})
+    </insert>
+    <update id="update_Users" parameterType="Users">
+        update users
+        <set>
+            <if test="name!=null">name=#{name},</if>
+            <if test="sex!=null">sex=#{sex},</if>
+            <if test="birthday!=null">birthday=#{birthday},</if>
+            <if test="password!=null">password =#{password},</if>
+            <if test="email!=null">email=#{email},</if>
+        </set>
+        where user_id=#{user_id}
+    </update>
+    <delete id="delete_Users" parameterType="Users">
+        delete from users where user_id=#{user_id}
+    </delete>
+
+    <select id="getOne_Users" parameterType="long" resultType="Users">
+        select * from users where user_id=#{user_id}
+    </select>
+    <select id="getAll_Users" resultType="Users">
+        select * from users
+    </select>
+    <select id="getAll_Param_Users" parameterType="map" resultType="Users">
+        select * from users where
+        <include refid="QueryWithParam"/>
+    </select>
+
+    <!--
+        关联关系
+         type 表示返回类型（一方）
+    -->
+    <!--<resultMap id="BookType_Book" type="BookType">
+        &lt;!&ndash;<id property="book_type" column=""/>
+        <result property="" column=""/>&ndash;&gt;
+
+        &lt;!&ndash;一对一映射 &ndash;&gt;
+        &lt;!&ndash;<association property="" column="" javaType="">
+            <id property="" column=""/>
+            <result property="" column=""/>
+        </association>
+        &ndash;&gt;
+        &lt;!&ndash;一对多映射 poperty 表示List集合对象的名字，ofType是集合中元素类型（多方）&ndash;&gt;
+        <collection property="books" ofType="Book">
+            <id property="book_id" column="book_id"/>
+        </collection>
+    </resultMap>
+    <select id="link_book" parameterType="long" resultMap="BookType_Book">
+        select * from book b,book_type t where t.book_type=#{book_type} and t.book_type=b.book_type
+    </select>-->
+
+</mapper>

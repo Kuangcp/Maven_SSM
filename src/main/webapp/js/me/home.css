@@ -1,0 +1,63 @@
+*{padding:0; margin:0;list-style:none;border:0;}
+.list_a a{
+    margin:0 0 0 260px;
+    width:100px;
+    height:40px;
+}
+.a_window{
+    background-color:greenyellow;
+    position: absolute;
+    margin:0 0px 0 650px ;
+    z-index: 999;
+}
+.a_window a{
+    float: left;
+    width:60px;
+    height:30px;
+}
+.type_box a button{
+    margin-bottom: 2px;
+}
+.type_title{
+    margin-left:0px;
+    width:325px;
+    text-align: center;
+}
+.type_title .a {
+    text-align: center;
+}
+.image_show{
+    /*position: absolute;*/
+    margin-bottom:345px;
+}
+.image_show ul li{
+    position:absolute;
+    top:0;
+    z-index: 1;
+}
+
+.image_show_book li{
+    font-family: 华文行楷;
+    font-size:19px;
+    text-align: center;
+    float: left;
+    width:140px;
+    cursor: pointer;
+    background-color:darkgray;
+}
+
+.four_list{
+    width:200px;
+}
+.login_box{
+    width: 400px;height:500px;
+    margin-left: 36%;margin-top:12%;
+}
+.login_form input{
+    width:300px;
+    margin-left:50px;
+}
+.login_form button{
+    width:250px;
+    margin-left:50px;
+}

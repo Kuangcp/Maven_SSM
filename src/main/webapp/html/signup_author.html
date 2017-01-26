@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <link rel="icon" href="../image/ico/book.ico"/>
+    <title>Login To Myth</title>
+    <link href="../js/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../css/signup.css" rel="stylesheet"/>
+
+    <script src="../js/jquery-3.0.0.min.js"></script>
+    <script src="../js/me/signup.js"></script>
+    <script src="../js/tether.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+<style>
+    body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+        background-color: #eee;
+    }
+</style>
+<script>
+    $(function(){
+    });
+</script>
+</head>
+<body>
+<div class="container">
+    <form class="form-signin" action="../jsp/author.jsp">
+        <h2 class="form-signin-heading"></h2>
+        <label for="inputEmail" class="sr-only">Email</label>
+        <input type="email" id="inputEmail" class="form-control" name="email" placeholder="邮件" required autofocus />
+
+        <input type="text" id="name" class="form-control" name="name" placeholder="昵称" onblur="checkUsername()" required/>
+        <div id="OUT_name"></div>
+
+        <input type="text" id="true_name" class="form-control" name="true_name" placeholder="真实姓名" required/>
+        <input type="text" id="id_card" class="form-control" name="id_card" placeholder="身份证号码" onblur="checkIdCard()" required/>
+        <input type="text" id="phone" class="form-control" name="phone" placeholder="联系电话" required/>
+        <label for="inputPassword1" class="sr-only">Password</label>
+        <input type="password" id="inputPassword1" class="form-control" name="password" placeholder="密码" required/>
+        <label for="inputPassword2" class="sr-only">Password</label>
+        <input type="password" id="inputPassword2" class="form-control" placeholder="确认密码"  onkeyup="checkPassword()" required/>
+        <div id="OUT_pass"></div>
+
+        <div>
+            <input type="text" class="form-control form-code" id="qq" name="qq" placeholder="QQ"  required>
+            <!--性别按钮-->
+            <span class="btn-group" data-toggle="buttons" style="margin:4px 0 0 5px;">
+                <label class="btn btn-primary active">
+                <input type="radio" name="sex" id="option1" value="1" autocomplete="off" checked/>男</label>
+                <label class="btn btn-primary">
+                <input type="radio" name="sex" id="option2" value="0" autocomplete="off"/>女</label>
+            </span>
+            <input type="text" class="form-control form-code" id="code" name="code" placeholder="收到的邮件验证码" required>
+            <!--不写type就会当成提交按钮-->
+            <button type="button" onclick="getCode()" class="btn btn-primary code-button" id="CodeBtn">获取验证码</button>
+        </div>
+        <br/>
+        <!--<button type="button" onclick="clearCode()" id="ClearCode">清除时间</button>-->
+        <!--<div class="checkbox" style="margin-top:10px;">
+            <label>
+                <input type="checkbox" name="remember" value="remember-me"> 下次自动登录
+            </label>
+        </div>-->
+        <button class="btn btn-lg btn-primary btn-block" type="submit" id="submitting">注 册</button>
+    </form>
+
+</div>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="../js/ie10-viewport-bug-workaround.js"></script>
+</body>
+</html>
