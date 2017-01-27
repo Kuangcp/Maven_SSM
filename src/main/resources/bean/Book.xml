@@ -68,13 +68,30 @@
 			<result property="" column=""/>
 		</association>
 		-->
-		<!--一对多映射 poperty 表示List集合对象的名字，ofType是集合中元素类型（多方）-->
+		<!--一对多映射 poperty 表示List集合对象的名字，ofType是集合中元素类型（多方）
+			要配置所有属性不然会有错误（数据库的值反射不进去） 真几把麻烦
+		-->
 		<collection property="books" ofType="Book">
 			<id property="book_id" column="book_id"/>
+			<result property="book_name" column="book_name"/>
+			<result property="author_id" column="author_id"/>
+			<result property="cover" column="cover"/>
+			<result property="introduce" column="introduce"/>
+			<result property="book_type" column="book_type"/>
+			<result property="create_time" column="create_time"/>
+			<result property="all_varcharacter" column="all_varcharacter"/>
+			<result property="book_status" column="book_status"/>
+			<result property="write_status" column="write_status"/>
+			<result property="click_num" column="click_num"/>
+			<result property="read_num" column="read_num"/>
+			<result property="income_num" column="income_num"/>
+			<result property="income" column="income"/>
+			<result property="score" column="score"/>
+
 		</collection>
 	</resultMap>
 	<select id="link_book" parameterType="long" resultMap="BookType_Book">
-		select * from book b,book_type t where t.book_type=#{book_type} and t.book_type=b.book_type
+		select b.* from book b,book_type t where t.book_type=#{book_type} and t.book_type=b.book_type
 	</select>
 <!--
 	书的操作SQL 必要的就插入，其他的有默认值
@@ -113,5 +130,16 @@
 	<select id="getAll_Param_Book" parameterType="map" resultType="Book">
 		select * from book where
 			<include refid="QueryWithParam"></include>
+	</select>
+	<!--
+		获取类型列表
+	-->
+	<resultMap id="Father_BookType" type="FatherType">
+		<collection property="bookTypes" ofType="BookType">
+			<id property="book_type" column="book_type"/>
+		</collection>
+	</resultMap>
+	<select id="FatherType_List" resultMap="Father_BookType">
+		select * from book_type b,father_type f where b.father_type=f.father_type_id
 	</select>
 </mapper>

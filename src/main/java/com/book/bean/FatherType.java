@@ -1,9 +1,12 @@
 package com.book.bean;
 
+import java.util.List;
+
 public class FatherType {
     private int father_type_id;
     private String type_name;
     private int sex;
+    private List<BookType>bookTypes;
 
     public FatherType(){}
     public FatherType(int father_type_id, String type_name, int sex){
@@ -30,6 +33,15 @@ public class FatherType {
     public void setSex(int sex){
        this.sex = sex;
     }
+
+    public List<BookType> getBookTypes() {
+        return bookTypes;
+    }
+
+    public void setBookTypes(List<BookType> bookTypes) {
+        this.bookTypes = bookTypes;
+    }
+
     @Override
     public String toString(){
         return "FatherType{"+

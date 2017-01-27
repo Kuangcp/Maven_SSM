@@ -1,6 +1,9 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" import="com.book.bean.*" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" import="com.book.bean.*,com.book.util.*,com.book.dao.BookTypeDao,java.util.*" %>
 <%
     String Path = request.getContextPath();
+    BookTypeDao dao = new BookTypeDao();
+    List list = dao.getAllTypes();
+
 //    System.out.println(Path);
     Users u = null;
     long user_id=0;
@@ -224,10 +227,40 @@
           使用数据库动态生成 如果为了不频繁查询数据库使用缓存机制（因为这个数据的改动较少）
         -->
         <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar" >
+            <%for(int i=0;i<list.size();++i){
+                FatherType fa = (FatherType)list.get(i);
+                List types = fa.getBookTypes();
+            %>
+            <div class="card type_title" >
+                <div class="card-header" role="tab" id="heading<%=i%>">
+                    <h5 class="mb-0">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%=i%>"
+                           aria-expanded="true" aria-controls="collapse2333">
+                            <%=fa.getType_name()%>
+                        </a>
+                    </h5>
+                </div>
+
+                <div id="collapse<%=i%>" class="collapse show" role="tabpanel" aria-labelledby="heading<%=i%>">
+                    <div class="card-block type_box">
+                        <%for (int j=0;j<types.size();++j){BookType type = (BookType)types.get(j);%>
+                            <a href=""><button type="button" class="btn btn-primary"><%=type.getType_name()%></button></a>
+                        <%}%>
+                    </div>
+                </div>
+            </div>
+            <%}%>
+        </div>
+
+
+
+        <%--<div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar" >
+
             <div class="card type_title" >
                 <div class="card-header" role="tab" id="headingOne">
                     <h5 class="mb-0">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
+                           aria-expanded="true" aria-controls="collapseOne">
                             奇异玄幻
                         </a>
                     </h5>
@@ -287,7 +320,7 @@
                 </div>
             </div>
             <!--类别区域 end-->
-        </div><!--/span-->
+        </div><--%>!--/span-->
     </div><!--/row-->
 
     <hr><!--分割线-->

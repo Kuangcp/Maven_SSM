@@ -134,7 +134,7 @@ public class Book {
         ",cover="+cover+
         ",introduce="+introduce+
         ",book_type="+book_type+
-        ",create_time="+create_time.toLocaleString()+
+        ",create_time="+(create_time!=null?create_time.toLocaleString():"__NULL__")+
         ",all_varcharacter="+all_varcharacter+
         ",book_status="+book_status+
         ",write_status="+write_status+

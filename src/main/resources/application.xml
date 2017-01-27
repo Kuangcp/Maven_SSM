@@ -34,7 +34,7 @@
         <property name="mapperLocations" value="classpath:bean/*.xml"/>
         <property name="typeAliasesPackage" value="com.book.bean"/>
     </bean>
-    <bean id="MybatisSessionFactory" class="com.book.dao.MybatisSessionFactory">
+    <bean id="mybatisSessionFactory" class="com.book.dao.MybatisSessionFactory">
         <property name="sessionFactory" ref="sqlSessionFactory"/>
     </bean>
 

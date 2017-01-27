@@ -60,7 +60,7 @@ public class UserController {
     public ModelAndView logout(HttpSession session){
         ModelAndView view = new ModelAndView("index");
         Users u = (Users)session.getAttribute("user");
-        String name="NULL_Value";
+        String name="当前没有用户在线，下线失败";
         if(u!=null) name=u.getName();
         session.removeAttribute("user");
         Log.info("注销登录 : "+name);

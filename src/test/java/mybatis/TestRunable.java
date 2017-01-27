@@ -6,6 +6,7 @@ import com.book.dao.BookDao;
 import com.book.dao.BookTypeDao;
 import com.book.dao.MybatisSessionFactory;
 import org.apache.ibatis.session.SqlSession;
+import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -20,6 +21,13 @@ import java.util.List;
  */
 public class TestRunable {
     private static org.slf4j.Logger Log = LoggerFactory.getLogger(TestRunable.class);
+    ApplicationContext context = null;
+
+
+    @Before
+    public void init(){
+        context = new ClassPathXmlApplicationContext("application.xml");
+    }
     @Test
     public void Runable(){
         ApplicationContext context = new ClassPathXmlApplicationContext("application.xml");
@@ -37,7 +45,8 @@ public class TestRunable {
     }
     @Test
     public void TestBookTypeQuery() throws Exception{
-        BookTypeDao dao = new BookTypeDao();
+        BookTypeDao dao  =(BookTypeDao) context.getBean("bookTypeDao");
+//        BookTypeDao dao = new BookTypeDao();
 
         List params = new ArrayList();
         //多条件查询
@@ -52,7 +61,7 @@ public class TestRunable {
     }
     @Test
     public void testBookQuery()throws Exception{
-        BookDao dao = new BookDao();
+        BookDao dao = (BookDao)context.getBean("bookDao");
         List<Book> list = dao.getAll();
         for (Book b:list){
             Log.info(b.toString());
@@ -60,7 +69,7 @@ public class TestRunable {
     }
     @Test
     public void testDelete()throws Exception{
-        BookTypeDao dao = new BookTypeDao();
+        BookTypeDao dao = (BookTypeDao) context.getBean("bookTypeDao");
         BookType b = new BookType();
         b.setBook_type(82);
         b.setType_name("?");
@@ -75,10 +84,10 @@ public class TestRunable {
     //测试一对多关系
     @Test
     public void testCollection() throws Exception{
-        BookTypeDao dao = new BookTypeDao();
+        BookTypeDao dao = (BookTypeDao) context.getBean("bookTypeDao");
         BookType bookType = dao.getBooksByBookType(2L);
         for(Book book:bookType.getBooks()){
-            Log.info(book.toString());
+            if(book!=null)Log.info(book.toString());
 
         }
     }

@@ -2,6 +2,7 @@ package com.book.dao;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class MybatisSessionFactory {
+    private static org.slf4j.Logger Log = LoggerFactory.getLogger(MybatisSessionFactory.class);
     @Autowired
     private  SqlSessionFactory sessionFactory;
 /*    static{
@@ -19,7 +21,6 @@ public class MybatisSessionFactory {
             InputStream inputStream = Resources.getResourceAsStream(resource);
             sessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         } catch (Exception e) {
-            // TODO: handle exception
             System.out.println("获取Session失败");
         }
     }*/
@@ -29,8 +30,10 @@ public class MybatisSessionFactory {
      * @return
      */
     public  SqlSession getSession(){
+
         SqlSession session = null;
-        session = sessionFactory.openSession();
+        session = this.sessionFactory.openSession();
+        Log.info("获取了一个Session"+session);
         return session;
     }
 
