@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" import="com.book.bean.*,com.book.util.*,com.book.dao.BookTypeDao,java.util.*" %>
 <%
     String Path = request.getContextPath();
-    BookTypeDao dao = new BookTypeDao();
+    BookTypeDao dao = (BookTypeDao)SpringContext.getBean("bookTypeDao");
     List list = dao.getAllTypes();
 
 //    System.out.println(Path);
@@ -235,13 +235,13 @@
                 <div class="card-header" role="tab" id="heading<%=i%>">
                     <h5 class="mb-0">
                         <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%=i%>"
-                           aria-expanded="true" aria-controls="collapse2333">
+                           aria-expanded="true" aria-controls="collapse<%=i%>">
                             <%=fa.getType_name()%>
                         </a>
                     </h5>
                 </div>
 
-                <div id="collapse<%=i%>" class="collapse show" role="tabpanel" aria-labelledby="heading<%=i%>">
+                <div id="collapse<%=i%>" class="collapse" role="tabpanel" aria-labelledby="heading<%=i%>">
                     <div class="card-block type_box">
                         <%for (int j=0;j<types.size();++j){BookType type = (BookType)types.get(j);%>
                             <a href=""><button type="button" class="btn btn-primary"><%=type.getType_name()%></button></a>
@@ -319,9 +319,9 @@
                     </div>
                 </div>
             </div>
-            <!--类别区域 end-->
-        </div><--%>!--/span-->
-    </div><!--/row-->
+        </div>--%>
+
+    </div>
 
     <hr><!--分割线-->
 

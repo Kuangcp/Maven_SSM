@@ -133,13 +133,20 @@
 	</select>
 	<!--
 		获取类型列表
+		只能得到一个联表 得不到想要的结果，得换个方式
 	-->
-	<resultMap id="Father_BookType" type="FatherType">
+	<!--<resultMap id="Father_BookType" type="FatherType">
 		<collection property="bookTypes" ofType="BookType">
 			<id property="book_type" column="book_type"/>
+			<result property="type_name" column="type_name"/>
+			<result property="sex" column="sex"/>
+			<result property="father_type" column="father_type"/>
 		</collection>
 	</resultMap>
 	<select id="FatherType_List" resultMap="Father_BookType">
-		select * from book_type b,father_type f where b.father_type=f.father_type_id
+		select * from father_type f,book_type b where b.father_type=f.father_type_id
+	</select>-->
+	<select id="getAll_FatherType" resultType="FatherType">
+		select * from father_type;
 	</select>
 </mapper>

@@ -8,8 +8,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * 为了在JSP方便调用别的类的方法
  */
 public class SpringContext {
+    private static ApplicationContext context;
+    static {
+        context = new ClassPathXmlApplicationContext("application.xml");
+    }
     public static Object getBean(String name){
-        ApplicationContext context = new ClassPathXmlApplicationContext("application.xml");
         return context.getBean(name);
     }
 

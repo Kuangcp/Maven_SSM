@@ -2,6 +2,7 @@ package mybatis;
 
 import com.book.bean.Book;
 import com.book.bean.BookType;
+import com.book.bean.FatherType;
 import com.book.dao.BookDao;
 import com.book.dao.BookTypeDao;
 import com.book.dao.MybatisSessionFactory;
@@ -89,6 +90,18 @@ public class TestRunable {
         for(Book book:bookType.getBooks()){
             if(book!=null)Log.info(book.toString());
 
+        }
+    }
+    //测试关联关系的查询，实现方式有问题
+    @Test
+    public void testAllType()throws Exception{
+        BookTypeDao dao = (BookTypeDao) context.getBean("bookTypeDao");
+        List<FatherType> fas = dao.getAllTypes();
+        for(FatherType fa:fas){
+            for(BookType type:fa.getBookTypes()){
+                Log.info(type.toString());
+            }
+            Log.info("-----------------");
         }
     }
 }
