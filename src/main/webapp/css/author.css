@@ -6,3 +6,6 @@
     font-size:18px;
     font-family: 华文新魏;
 }
+.invisible{
+    display: none;
+}

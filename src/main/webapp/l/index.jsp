@@ -53,7 +53,8 @@
         var email = $('#inputEmail').val();
         var pass = $('#inputPassword').val();
         var code = $('#inputCode').val();
-        ajax.post("<%=Path%>/user/ajax_in","email="+email+"&password="+pass+"&code="+code,function (data) {
+        // sex 0 是读者，1 作家
+        ajax.post("<%=Path%>/user/ajax_in","email="+email+"&password="+pass+"&code="+code+"&sex=0",function (data) {
             //console.log(data);
             if(data==1){
                 window.location.href="http://localhost/Book/";
@@ -89,13 +90,13 @@
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="#">Myth</a>
+    <a class="navbar-brand title_font" href="<%=Path%>/" >Myth</a>
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <%--<li class="nav-item active">
                 <a class="nav-link" href="<%=Path%>/">首页 <span class="sr-only">(current)</span></a>
-            </li>
+            </li>--%>
 
             <!--<li class="nav-item">
               <a class="nav-link disabled" href="#">Disabled</a>
@@ -141,7 +142,7 @@
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">功能中心</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
 
-                    <a class="dropdown-item" href="<%=Path%>/l/login.jsp">作家专区</a>
+                    <a class="dropdown-item" href="<%=Path%>/l/author.jsp">作家专区</a>
                     <a class="dropdown-item" href="#">客服中心</a>
                 </div>
             </li>

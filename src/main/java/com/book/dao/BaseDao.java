@@ -8,8 +8,8 @@ import java.util.List;
  */
 public interface BaseDao <T,Id_Type extends Serializable>{
     void save(T t)throws Exception;
-    void delete(T t)throws Exception;
-    void update(T t)throws Exception;
+    boolean delete(T t)throws Exception;
+    boolean update(T t)throws Exception;
     List<T> getAll()throws Exception;
     List<T> getAll(String param) throws Exception;
     List<T> getAll(List params) throws Exception;

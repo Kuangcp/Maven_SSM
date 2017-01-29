@@ -37,17 +37,33 @@ public class BaseDaoImpl <T,Id_Type extends Serializable> extends MybatisSession
     }
 
     @Override
-    public void delete(Object o) throws Exception {
+    public boolean delete(Object o) throws Exception {
+        boolean flag = true;
+        try{
         SqlSession session = getSession();
         session.delete("myth.book.delete_"+className,o);
         session.commit();
+        }catch(Exception e){
+            e.printStackTrace();
+            flag = false;
+            throw e;
+        }
+        return flag;
     }
 
     @Override
-    public void update(Object o) throws Exception {
-        SqlSession session = getSession();
-        session.update("myth.book.update_"+className,o);
-        session.commit();
+    public boolean update(Object o) throws Exception {
+        boolean flag = true;
+        try{
+            SqlSession session = getSession();
+            session.update("myth.book.update_"+className,o);
+            session.commit();
+        }catch(Exception e){
+            e.printStackTrace();
+            flag = false;
+            throw e;
+        }
+        return flag;
     }
 
     @Override

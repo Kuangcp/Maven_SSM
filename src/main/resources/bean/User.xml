@@ -74,5 +74,20 @@
     <delete id="delete_Author" parameterType="Author">
         delete from author where author_id=#{author_id}
     </delete>
+    <update id="update_Author" parameterType="Author">
+        update author
+        <set>
+            <if test="name!=null">name=#{name},</if>
+            <if test="sex!=null">sex=#{sex},</if>
+            <if test="id_card!=null">id_card=#{id_card},</if>
+            <if test="true_name!=null">true_name=#{true_name},</if>
+            <if test="account!=null">account=#{account},</if>
+            <if test="password!=null">password=#{password},</if>
+            <if test="qq!=null">qq=#{qq},</if>
+            <if test="phone!=null">phone=#{phone},</if>
+            <if test="email!=null">email=#{email},</if>
+        </set>
+        where author_id=#{author_id}
+    </update>
 
 </mapper>

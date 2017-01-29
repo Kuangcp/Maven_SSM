@@ -63,12 +63,27 @@ public class UserController {
     }
     @RequestMapping("/logout")
     public ModelAndView logout(HttpSession session){
-        ModelAndView view = new ModelAndView("index");
+
+        String viewName="login";
+        String name="";
         Users u = (Users)session.getAttribute("user");
-        String name="当前没有用户在线，下线失败";
-        if(u!=null) name=u.getName();
-        session.removeAttribute("user");
-        Log.info("注销登录 : "+name);
+        Author a = (Author)session.getAttribute("author");
+        Log.info("_"+a+"_"+u);
+        if(u==null && a==null){
+            name="当前没有用户在线，下线失败";
+        }
+        if(u!=null){
+            viewName="index";
+            name=u.getName();
+            session.removeAttribute("user");
+        }else if(a!=null){
+            viewName="login";
+            name=a.getName();
+            session.removeAttribute("author");
+        }
+
+        Log.info("注销登录 : _"+name+"_");
+        ModelAndView view = new ModelAndView(viewName);
         return view;
     }
 
@@ -81,6 +96,7 @@ public class UserController {
     public String login(@ModelAttribute Users users, HttpServletRequest request)throws Exception {
         HttpSession session = request.getSession();
         String code = (String) session.getAttribute("code");
+        int sex = users.getSex();
         String email = users.getEmail();
         String pass = users.getPassword();
         String inputCode = request.getParameter("code").toUpperCase();
@@ -90,12 +106,12 @@ public class UserController {
             long id = userService.Login(email, pass);
             Log.info("查询到的id"+id);
             String result = id + "";
-            if (result.length() == 10) {//作家
+            if (result.length() == 10 && sex==1) {//作家
                 Author a = (Author)authorDao.getOne(id);
                 Log.info("作家__"+a.toString());
                 session.setAttribute("author",a);
                 return "1";
-            } else if (result.length() == 12) {//用户
+            } else if (result.length() == 12 && sex==0) {//用户
                 Users u = (Users) userDao.getOne(id);
                 Log.info("用户__"+u.toString());
                 session.setAttribute("user", u);
@@ -105,6 +121,7 @@ public class UserController {
         return "0";
 
     }
+
     @RequestMapping("/getCode")
     @ResponseBody
     public String getCode(HttpSession session){
@@ -118,5 +135,18 @@ public class UserController {
         session.setAttribute("code",code);
         Log.info("生成验证码 : "+code);
         return code;
+    }
+
+    @RequestMapping("/update_author")
+    @ResponseBody
+    public String update(@ModelAttribute Author author)throws Exception{
+        String result=null;
+        boolean flag = authorDao.update(author);
+        if(flag){
+            result="1";
+        }else{
+            result="0";
+        }
+        return result;
     }
 }

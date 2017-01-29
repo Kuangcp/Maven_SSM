@@ -45,7 +45,7 @@
             var email = $('#inputEmail').val();
             var pass = $('#inputPassword').val();
             var code = $('#inputCode').val();
-            ajax.post("<%=Path%>/user/ajax_in","email="+email+"&password="+pass+"&code="+code,function (data) {
+            ajax.post("<%=Path%>/user/ajax_in","email="+email+"&password="+pass+"&code="+code+"&sex=1",function (data) {
                 //console.log(data); 登录成功返回1失败返回0，这里是到读者
                 if(data==1){
                     window.location.href="<%=Path%>/l/author.jsp";
@@ -75,9 +75,9 @@
     <form class="form-signin">
         <h2 class="form-signin-heading">Myth Book</h2>
         <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="邮件" required autofocus>
+        <input type="email" id="inputEmail" class="form-control" placeholder="邮件" value="1181951407@qq.com" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="密码" required>
+        <input type="password" id="inputPassword" class="form-control" placeholder="密码" value="1232" required>
         <div>
             <label for="inputCode" class="sr-only">Code</label>
             <input type="text" id="inputCode" name="code" class="form-control" placeholder="验证码:" style="width:150px;float:left;" required>
