@@ -1,6 +1,8 @@
 package com.book.controller;
 
+import com.book.bean.Author;
 import com.book.bean.Users;
+import com.book.dao.AuthorDao;
 import com.book.dao.UserDao;
 import com.book.service.UserService;
 import org.slf4j.LoggerFactory;
@@ -26,6 +28,9 @@ public class UserController {
     UserService userService;
     @Autowired
     UserDao userDao;
+    @Autowired
+    AuthorDao authorDao;
+
 
     private static org.slf4j.Logger Log = LoggerFactory.getLogger(UserController.class);
 
@@ -69,31 +74,34 @@ public class UserController {
 
     /*
         ajax 发起登录请求 返回1成功0失败
+        所有用户都是使用这个来发起登录请求，根据ID的长度来判断身份
      */
-    @RequestMapping("/ajax_in")
+    @RequestMapping(value="/ajax_in",method = RequestMethod.POST)
     @ResponseBody
     public String login(@ModelAttribute Users users, HttpServletRequest request)throws Exception {
         HttpSession session = request.getSession();
         String code = (String) session.getAttribute("code");
-        String inputCode = request.getParameter("code");
-        inputCode = inputCode.toUpperCase();
-        Log.info("用户输入验证码:"+inputCode);
         String email = users.getEmail();
         String pass = users.getPassword();
+        String inputCode = request.getParameter("code").toUpperCase();
+        Log.info("用户输入验证码:"+inputCode);
 
-        if (inputCode != null && inputCode.equals(code)) {
+//        if (inputCode != null && inputCode.equals(code)) {
             long id = userService.Login(email, pass);
+            Log.info("查询到的id"+id);
             String result = id + "";
             if (result.length() == 10) {//作家
-                //session.setAttribute("user_id", id);
+                Author a = (Author)authorDao.getOne(id);
+                Log.info("作家__"+a.toString());
+                session.setAttribute("author",a);
                 return "1";
             } else if (result.length() == 12) {//用户
                 Users u = (Users) userDao.getOne(id);
-                Log.info("用户："+u.toString());
+                Log.info("用户__"+u.toString());
                 session.setAttribute("user", u);
                 return "1";
             }
-        }
+//        }
         return "0";
 
     }
@@ -101,7 +109,7 @@ public class UserController {
     @ResponseBody
     public String getCode(HttpSession session){
         session.removeAttribute("code");
-        String init="ZXCVBNMLKJHGFDSAQWERTYUIOP1234567890";
+        String init="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         String code="";
         for(int i=0;i<4;++i){
             int index = (int)(Math.random()*36);

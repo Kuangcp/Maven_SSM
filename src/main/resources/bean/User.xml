@@ -36,7 +36,6 @@
         select * from users where
         <include refid="QueryWithParam"/>
     </select>
-
     <!--
         关联关系
          type 表示返回类型（一方）
@@ -59,5 +58,21 @@
     <select id="link_book" parameterType="long" resultMap="BookType_Book">
         select * from book b,book_type t where t.book_type=#{book_type} and t.book_type=b.book_type
     </select>-->
+    <!--
+        作家数据操作
+    -->
+    <select id="getOne_Author" parameterType="long" resultType="Author">
+        select * from author where author_id=#{author_id}
+    </select>
+    <select id="getAll_Author" resultType="Author">
+        select * from author
+    </select>
+    <select id="getAll_Param_Author" parameterType="map" resultType="Author">
+        select * from author where
+        <include refid="QueryWithParam"/>
+    </select>
+    <delete id="delete_Author" parameterType="Author">
+        delete from author where author_id=#{author_id}
+    </delete>
 
 </mapper>

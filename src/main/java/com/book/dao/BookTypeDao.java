@@ -45,6 +45,7 @@ public class BookTypeDao extends BaseDaoImpl<BookType,Long>{
             ((FatherType)list.get(i)).setBookTypes(getAll("father_type="+((FatherType)list.get(i)).getFather_type_id()));
         }
         return list;
+        //使用上诉方式就要频繁查询，获取Session，使用关联关系还要修复下如下方式有问题
 //        return getSession().selectList("myth.book.FatherType_List");
     }
 }

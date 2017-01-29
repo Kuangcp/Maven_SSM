@@ -18,7 +18,7 @@
     <title> Myth Book </title>
     <link rel="icon" href="<%=Path%>/image/ico/book.ico">
     <link href="<%=Path%>/js/css/bootstrap.min.css" rel="stylesheet">
-    <link href="<%=Path%>/js/me/home.css" rel="stylesheet">
+    <link href="<%=Path%>/css/home.css" rel="stylesheet">
     <link href="<%=Path%>/css/offcanvas.css" rel="stylesheet">
 
     <script src="<%=Path%>/js/jquery-3.0.0.min.js"></script>
@@ -141,7 +141,7 @@
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">功能中心</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
 
-                    <a class="dropdown-item" href="../html/signup_author.html">作家专区</a>
+                    <a class="dropdown-item" href="<%=Path%>/l/login.jsp">作家专区</a>
                     <a class="dropdown-item" href="#">客服中心</a>
                 </div>
             </li>
@@ -190,8 +190,6 @@
                     <%}%>
                     <li style="width: 30px;color:#0E88EB;"><a href="">>></a></li>
                 </ul>
-                <!--<img src="tri.png">-->
-
             </div>
             <br/>
             <br/>
@@ -199,28 +197,27 @@
             <!--排行榜区域-->
             <div class="row ">
                 <div class="col-5 col-lg-3 ">
-                    <h2>热销排行</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-                </div><!--/span-->
-                <div class="col-5 col-lg-3">
-                    <h2>点击排行</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-                </div><!--/span-->
-                <div class="col-5 col-lg-3">
-                    <h2>打赏排行</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-                </div><!--/span-->
-                <div class="col-5 col-lg-3">
-                    <h2>收藏排行</h2>
-                    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                    <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-                </div><!--/span-->
-            </div><!--/row-->
-        </div><!--/span-->
+                    <h2 class="bang_title">热销排行</h2>
 
+                    <p><a class="btn btn-secondary" href="#" role="button">更多 &raquo;</a></p>
+                </div><!--/span-->
+                <div class="col-5 col-lg-3">
+                    <h2 class="bang_title">点击排行</h2>
+
+                    <p><a class="btn btn-secondary" href="#" role="button">更多 &raquo;</a></p>
+                </div><!--/span-->
+                <div class="col-5 col-lg-3">
+                    <h2 class="bang_title">打赏排行</h2>
+
+                    <p><a class="btn btn-secondary" href="#" role="button">更多 &raquo;</a></p>
+                </div><!--/span-->
+                <div class="col-5 col-lg-3">
+                    <h2 class="bang_title">收藏排行</h2>
+
+                    <p><a class="btn btn-secondary" href="#" role="button">更多 &raquo;</a></p>
+                </div>
+            </div>
+        </div>
 
         <!--
           类别区域
@@ -240,7 +237,6 @@
                         </a>
                     </h5>
                 </div>
-
                 <div id="collapse<%=i%>" class="collapse" role="tabpanel" aria-labelledby="heading<%=i%>">
                     <div class="card-block type_box">
                         <%for (int j=0;j<types.size();++j){BookType type = (BookType)types.get(j);%>
@@ -251,78 +247,7 @@
             </div>
             <%}%>
         </div>
-
-
-
-        <%--<div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar" >
-
-            <div class="card type_title" >
-                <div class="card-header" role="tab" id="headingOne">
-                    <h5 class="mb-0">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
-                           aria-expanded="true" aria-controls="collapseOne">
-                            奇异玄幻
-                        </a>
-                    </h5>
-                </div>
-
-                <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
-                    <div class="card-block type_box">
-                        <a href=""><button type="button" class="btn btn-primary">玄幻大陆</button></a>
-                        <a href=""><button type="button" class="btn btn-primary">洪荒传说</button></a>
-                        <a href=""><button type="button" class="btn btn-primary">异界时空</button></a>
-                    </div>
-                </div>
-            </div>
-            <!--0000000000000000000000-->
-            <div class="card type_title">
-                <div class="card-header" role="tab" id="headingTwo">
-                    <h5 class="mb-0">
-                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            都市小说
-                        </a>
-                    </h5>
-                </div>
-                <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
-                    <div class="card-block type_box">
-                        <a href=""><button type="button" class="btn btn-primary">热血都市</button></a>
-                        <a href=""><button type="button" class="btn btn-primary">洪荒传说</button></a>
-                        <a href=""><button type="button" class="btn btn-primary">异界时空</button></a>
-                    </div>
-                </div>
-            </div>
-            <!--0000000000000000000000-->
-            <div class="card type_title">
-                <div class="card-header" role="tab" id="headingThree">
-                    <h5 class="mb-0">
-                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            武侠仙侠
-                        </a>
-                    </h5>
-                </div>
-                <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
-                    <div class="card-block type_box">
-                    </div>
-                </div>
-            </div>
-            <!--0000000000000000000000-->
-            <div class="card type_title">
-                <div class="card-header" role="tab" id="headingFour">
-                    <h5 class="mb-0">
-                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            历史军事
-                        </a>
-                    </h5>
-                </div>
-                <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
-                    <div class="card-block type_box">
-                    </div>
-                </div>
-            </div>
-        </div>--%>
-
     </div>
-
     <hr><!--分割线-->
 
     <footer>
@@ -371,9 +296,6 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="<%=Path%>/js/jquery-slim.min.js"></script>
-<!--
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
--->
 <script src="<%=Path%>/js/tether.min.js"></script>
 <script src="<%=Path%>/js/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->

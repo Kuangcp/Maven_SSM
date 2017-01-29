@@ -45,7 +45,6 @@
     cursor: pointer;
     background-color:darkgray;
 }
-
 .four_list{
     width:200px;
 }
@@ -60,4 +59,7 @@
 .login_form button{
     width:250px;
     margin-left:50px;
+}
+.bang_title{
+    font-family: 华文行楷;
 }
