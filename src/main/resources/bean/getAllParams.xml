@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myth.book">
+
+    <sql id="QueryWithParam">
+        <if test="param_list!=null">
+            <foreach collection="param_list" item="item" index="currentIndex"  separator=" and ">
+                ${item}
+            </foreach>
+        </if>
+        <if test="param!=null">
+            ${param}
+        </if>
+    </sql>
+
+    <select id="getAll_Param_Users" parameterType="map" resultType="Users">
+        select * from users where
+        <include refid="QueryWithParam"/>
+    </select>
+
+    <select id="getAll_Param_Author" parameterType="map" resultType="Author">
+        select * from author where
+        <include refid="QueryWithParam"/>
+    </select>
+
+    <select id="getAll_Param_BookType" parameterType="map" resultType="BookType">
+        select * from book_type where
+        <include refid="QueryWithParam"></include>
+    </select>
+
+    <select id="getAll_Param_Book" parameterType="map" resultType="Book">
+        select * from book where
+        <include refid="QueryWithParam"></include>
+    </select>
+
+</mapper>

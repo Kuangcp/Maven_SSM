@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myth.book">
+
+    <resultMap id="BookType_Book" type="BookType">
+        <!--<id property="book_type" column=""/>
+        <result property="" column=""/>-->
+
+        <!--一对一映射 -->
+        <!--<association property="" column="" javaType="">
+            <id property="" column=""/>
+            <result property="" column=""/>
+        </association>
+        -->
+        <!--一对多映射 poperty 表示List集合对象的名字，ofType是集合中元素类型（多方）
+            要配置所有属性不然会有错误（数据库的值反射不进去） 真几把麻烦
+        -->
+        <collection property="books" ofType="Book">
+            <id property="book_id" column="book_id"/>
+            <result property="book_name" column="book_name"/>
+            <result property="author_id" column="author_id"/>
+            <result property="cover" column="cover"/>
+            <result property="introduce" column="introduce"/>
+            <result property="book_type" column="book_type"/>
+            <result property="create_time" column="create_time"/>
+            <result property="all_varcharacter" column="all_varcharacter"/>
+            <result property="book_status" column="book_status"/>
+            <result property="write_status" column="write_status"/>
+            <result property="click_num" column="click_num"/>
+            <result property="read_num" column="read_num"/>
+            <result property="income_num" column="income_num"/>
+            <result property="income" column="income"/>
+            <result property="score" column="score"/>
+
+        </collection>
+    </resultMap>
+    <select id="link_book" parameterType="long" resultMap="BookType_Book">
+        select b.* from book b,book_type t where t.book_type=#{book_type} and t.book_type=b.book_type
+    </select>
+
+</mapper>

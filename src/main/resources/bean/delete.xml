@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myth.book">
+
+    <delete id="delete_Users" parameterType="Users">
+        delete from users where user_id=#{user_id}
+    </delete>
+
+    <delete id="delete_Author" parameterType="Author">
+        delete from author where author_id=#{author_id}
+    </delete>
+
+    <delete id="delete_BookType" parameterType="BookType">
+        delete from ebook.book_type where book_type=#{book_type}
+    </delete>
+
+    <delete id="delete_Book" parameterType="Book">
+        delete from ebook.book where book_id=#{book_id}
+    </delete>
+
+</mapper>

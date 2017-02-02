@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myth.book">
+
+    <update id="update_Users" parameterType="Users">
+        update users
+        <set>
+            <if test="name!=null">name=#{name},</if>
+            <if test="sex!=null">sex=#{sex},</if>
+            <if test="birthday!=null">birthday=#{birthday},</if>
+            <if test="password!=null">password =#{password},</if>
+            <if test="email!=null">email=#{email},</if>
+        </set>
+        where user_id=#{user_id}
+    </update>
+
+    <update id="update_Author" parameterType="Author">
+        update author
+        <set>
+            <if test="name!=null">name=#{name},</if>
+            <if test="sex!=null">sex=#{sex},</if>
+            <if test="id_card!=null">id_card=#{id_card},</if>
+            <if test="true_name!=null">true_name=#{true_name},</if>
+            <if test="account!=null">account=#{account},</if>
+            <if test="password!=null">password=#{password},</if>
+            <if test="qq!=null">qq=#{qq},</if>
+            <if test="phone!=null">phone=#{phone},</if>
+            <if test="email!=null">email=#{email},</if>
+        </set>
+        where author_id=#{author_id}
+    </update>
+
+    <update id="update_BookType" parameterType="BookType">
+        update book_type
+        <set>
+            <if test="type_name!=null">type_name=#{type_name},</if>
+            <if test="sex!=null">sex=#{sex},</if>
+            <if test="father_type!=null">father_type=#{father_type},</if>
+        </set>
+        where book_type=#{book_type}
+    </update>
+
+    <update id="update_Book" parameterType="Book">
+        update book
+        <set>
+            <if test="cover!=null">cover=#{cover},</if>
+            <if test="book_type!=null">book_type=#{book_type},</if>
+            <if test="introduce!=null">introduce=#{introduce},</if>
+            <if test="book_status!=null">book_status=#{book_status},</if>
+            <if test="write_status!=null">write_status=#{write_status},</if>
+            <if test="all_varcharacter!=null">all_varcharacter=#{all_varcharacter},</if>
+            <if test="click_num!=null">click_num=#{click_num},</if>
+            <if test="read_num!=null">read_num=#{read_num},</if>
+            <if test="income_num!=null">income_num=#{income_num},</if>
+            <if test="income!=null">income=#{income},</if>
+            <if test="score!=null">score=#{score},</if>
+        </set>
+        where book_id=#{book_id}
+    </update>
+
+    <update id="update_FatherType" parameterType="FatherType">
+        update father_type
+        <set>
+            <if test="type_name!=null">type_name=#{type_name},</if>
+            <if test="sex!=null">sex=#{sex},</if>
+        </set>
+    </update>
+
+
+
+</mapper>

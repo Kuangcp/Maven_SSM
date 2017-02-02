@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myth.book">
+
+    <select id="getOne_Users" parameterType="long" resultType="Users">
+        select * from users where user_id=#{user_id}
+    </select>
+    <select id="getAll_Users" resultType="Users">
+        select * from users
+    </select>
+
+    <select id="getOne_Author" parameterType="long" resultType="Author">
+        select * from author where author_id=#{author_id}
+    </select>
+    <select id="getAll_Author" resultType="Author">
+        select * from author
+    </select>
+
+    <select id="getOne_BookType" parameterType="long" resultType="BookType">
+        select * from book_type where book_type=#{book_type}
+    </select>
+    <select id="getAll_BookType" resultType="BookType">
+        select * from book_type
+    </select>
+
+    <select id="getOne_Book" parameterType="long" resultType="Book">
+        select * from book where book_id=#{book_id}
+    </select>
+    <select id="getAll_Book" resultType="Book">
+        select * from book
+    </select>
+
+    <select id="getOne_FatherType" resultType="FatherType">
+        select * from father_type where father_type_id=#{father_type_id}
+    </select>
+    <select id="getAll_FatherType" resultType="FatherType">
+        select * from father_type;
+    </select>
+
+</mapper>
