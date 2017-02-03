@@ -1,5 +1,5 @@
 <%@ page import="com.book.bean.Author" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf8"%>
 <%
     String Path = request.getContextPath();
     String sexName="";
@@ -114,7 +114,7 @@
                 <a class="nav-link dropdown-toggle user_font" href="http://example.com" id="dropdown03"
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><%=author.getName()%></a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item"  onclick="item_tran('0')">个人中心</a>
+                    <a class="dropdown-item" href="#" onclick="item_tran('0')">个人中心</a>
                     <a class="dropdown-item" href="#">文档帮助</a>
                     <a class="dropdown-item" href="<%=Path%>/user/logout">注销登录</a>
                 </div>
@@ -151,8 +151,10 @@
         <%--
             页面内容
         --%>
+    <%if(author!=null){%>
         <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3" id="main_0">
             <h2>个人资料</h2>
+
             <div id="show_info">
                 昵称 : <%=author.getName()%><br/>
                 性别 : <%=sexName%><br/>
@@ -163,6 +165,7 @@
                 邮件地址 : <%=author.getEmail()%><br/>
                 <button type="button" class="btn btn-primary" onclick="show_update()">更改资料</button>
             </div>
+
             <div id="update_Info" class="invisible">
                 <form class="form-signin" action="<%=Path%>/user/update_author">
                     <h2 class="form-signin-heading"></h2>
@@ -226,6 +229,7 @@
             <h1>message66 </h1>
 
         </main>
+    <%}%>
     </div>
 </div>
 <!-- Placed at the end of the document so the pages load faster -->

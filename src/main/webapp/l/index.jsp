@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" import="com.book.bean.*,com.book.util.*,com.book.dao.BookTypeDao,java.util.*" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" import="com.book.bean.*,com.book.util.*,com.book.dao.BookTypeDao,java.util.*" pageEncoding="utf8" %>
 <%
     String Path = request.getContextPath();
     BookTypeDao dao = (BookTypeDao)SpringContext.getBean("bookTypeDao");
@@ -15,7 +15,7 @@
 %>
 <html>
 <head>
-    <title> Myth Book </title>
+    <title>Myth Book</title>
     <link rel="icon" href="<%=Path%>/image/ico/book.ico">
     <link href="<%=Path%>/js/css/bootstrap.min.css" rel="stylesheet">
     <link href="<%=Path%>/css/home.css" rel="stylesheet">

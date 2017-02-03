@@ -3,11 +3,13 @@
 <mapper namespace="myth.book">
 
     <insert id="insert_FatherType" parameterType="FatherType">
-        insert into father_type(type_name, sex) values(#{type_name},#{sex});
+        insert into father_type(type_name, sex)
+          values(#{type_name},#{sex});
     </insert>
 
     <insert id="insert_BookType" parameterType="BookType">
-        insert into book_type(type_name,sex,father_type) values(#{type_name},#{sex},#{father_type})
+        insert into book_type(type_name,sex,father_type)
+          values(#{type_name},#{sex},#{father_type})
     </insert>
 
     <insert id="insert_Book" parameterType="Book">
@@ -31,11 +33,11 @@
 
     <insert id="insert_BookshelfNow" parameterType="BookshelfNow">
         insert into bookshelf_now (user_id, book_id, add_time, last_chapter)
-        values(#{user_id},#{book_id},now(),#{last_chapter})
+          values(#{user_id},#{book_id},now(),#{last_chapter})
     </insert>
     <insert id="insert_BookshelfOld" parameterType="BookshelfOld">
         insert into bookshelf_old (book_id, user_id, delete_time)
-        values(#{book_id},#{user_id},now())
+          values(#{book_id},#{user_id},now())
     </insert>
 
     <insert id="insert_CashCoupon" parameterType="CashCoupon">
@@ -53,9 +55,24 @@
           values(#{user_id},#{title},#{content})
     </insert>
 
-    <insert id="insert_" parameterType="DiscussAdmire">
+    <insert id="insert_DiscussAdmire" parameterType="DiscussAdmire">
         insert into discuss_admire (user_id, discuss_id, click_time)
           values(#{user_id},#{discuss_id},now())
+    </insert>
+
+    <insert id="insert_DiscussDetail" parameterType="DiscussDetail">
+        insert into discuss_detail ( discuss_id, push_time, user_id, content)
+          values(#{discuss_id},now(),#{user_id},#{content})
+    </insert>
+
+    <insert id="insert_DiscussDetailAdmire" parameterType="DiscussDetailAdmire">
+        insert into discuss_detail_admire ( user_id, detail_id, click_time)
+          values(#{user_id},#{detail_id},now())
+    </insert>
+
+    <insert id="insert_DynamicStatus" parameterType="DynamicStatus">
+        insert into dynamic_status (status_name, status_value)
+          values(#{status_name},#{status_value})
     </insert>
 
     <insert id="insert_Users" parameterType="Users">
