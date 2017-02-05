@@ -104,7 +104,7 @@
 
         </ul>
 
-        <form class="form-inline my-2 my-lg-0">
+        <form class="form-inline my-2 my-lg-0" action="#">
             <input class="form-control mr-sm-2" type="text" placeholder="输入......"><!--动态生成，将最热的默认填入，不改就直接搜默认填入的内容-->
             <button class="btn btn-primary" type="submit"><img src="<%=Path%>/image/home/zoom-outline.png"></button>
         </form>

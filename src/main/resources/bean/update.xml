@@ -58,12 +58,86 @@
         where book_id=#{book_id}
     </update>
 
+    <update id="update_BookAppraise" parameterType="BookAppraise">
+        update book_appraise
+        <set>
+            <if test="user_id!=null">user_id=#{user_id},</if>
+            <if test="score!=null">score=#{score},</if>
+            <if test="content!=null">content=#{content},</if>
+            <if test="admire_num!=null">admire_num=#{admire_num},</if>
+        </set>
+    </update>
+
+    <update id="update_BookAppraiseAdmire" parameterType="BookAppraiseAdmire">
+        update book_appraise_admire
+        <set>
+            <if test="user_id!=null">user_id=#{user_id},</if>
+            <if test="appraise_id!=null">appraise_id=#{appraise_id},</if>
+        </set>
+    </update>
+
+    <update id="update_BookCatalog" parameterType="BookCatalog">
+        update book_catalog
+        <set>
+            <if test="book_id!=null">book_id=#{book_id},</if>
+            <if test="chapter_name!=null">chapter_name=#{chapter_name},</if>
+            <if test="content!=null">content=#{content},</if>
+            <if test="up_time!=null">up_time=#{up_time},</if>
+            <if test="chapter_character!=null">chapter_character=#{chapter_character},</if>
+        </set>
+        where
+    </update>
+
+    <update id="update_BookshelfNow" parameterType="BookshelfNow">
+        update bookshelf_now
+        <set>
+            <if test="user_id!=null">user_id=#{user_id},</if>
+            <if test="book_id!=null">book_id=#{book_id},</if>
+            <if test="add_time!=null">add_time=#{add_time},</if>
+            <if test="last_chapter!=null">last_chapter=#{last_chapter},</if>
+        </set>
+        where book_id=#{book_id} and user_id=#{user_id}
+    </update>
+
+    <update id="update_BookshelfOld" parameterType="BookshelfOld">
+        update bookshelf_old
+        <set>
+            <if test="book_id!=null">book_id=#{book_id},</if>
+            <if test="user_id!=null">user_id=#{user_id},</if>
+            <if test="delete_time !=null">delete_time=#{delete_time},</if>
+        </set>
+        where book_id=#{book_id} and user_id=#{user_id}
+    </update>
+    
+    <update id="update_BonusList" parameterType="BonusList">
+        update bonus_list
+        <set>
+            <if test="book_id!=null">book_id=#{book_id},</if>
+            <if test="user_id!=null">user_id=#{user_id},</if>
+            <if test="income!=null">income=#{income},</if>
+        </set>
+        where income_id=#{income_id}
+    </update>
+
+    <update id="update_CashCoupon" parameterType="CashCoupon">
+        update cash_coupon
+        <set>
+            <if test="name!=null">name=#{name},</if>
+            <if test="discount!=null">discount=#{discount},</if>
+            <if test="preferential!=null">preferential=#{preferential},</if>
+            <if test="start_time!=null">start_time=#{start_time},</if>
+            <if test="end_time!=null">end_time=#{end_time},</if>
+        </set>
+        where cash_id=#{cash_id}
+    </update>
+
     <update id="update_FatherType" parameterType="FatherType">
         update father_type
         <set>
             <if test="type_name!=null">type_name=#{type_name},</if>
             <if test="sex!=null">sex=#{sex},</if>
         </set>
+        where father_type_id=#{father_type_id}
     </update>
 
 

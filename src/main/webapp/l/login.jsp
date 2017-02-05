@@ -81,7 +81,7 @@
         <div>
             <label for="inputCode" class="sr-only">Code</label>
             <input type="text" id="inputCode" name="code" class="form-control" placeholder="验证码:" style="width:150px;float:left;" required>
-            <button type="button" class="btn-primary" style="width:70px;height:32px;float:left;margin-left: 20px;margin-top:6px;" id="ShowCode" onclick="turnCode()"></button>
+            <button type="button" class="btn btn-primary" style="width:70px;height:32px;float:left;margin-left: 20px;margin-top:6px;" id="ShowCode" onclick="turnCode()"></button>
         </div>
         <br/><br/>
         <div id="OUT" style="margin-left:50px;"></div>

@@ -9,3 +9,28 @@
 .invisible{
     display: none;
 }
+.row_box{
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+
+    margin-bottom: 5px;
+    width:400px;
+    background-color: rgba(166,218,220,1);
+    background-image: -webkit-gradient(linear,0 0,0 30,from(hsla(0,0%,100%,0.6)),to(hsla(0,0%,100%,0)));
+    border: 1px solid lightskyblue;
+}
+.inputBox{
+    position: absolute;
+    top:560px;
+    left:120px;
+    /*background-color: lightgray;*/
+
+    /*margin-top:400px;*/
+    /*margin-left: 30%;*/
+}
+.historychat{
+    width:1220px;
+    height:425px;
+    overflow: auto;
+}

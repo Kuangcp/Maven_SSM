@@ -20,12 +20,16 @@
     <link rel="icon" href="<%=Path%>/image/ico/book.ico">
     <link href="<%=Path%>/js/css/bootstrap.min.css" rel="stylesheet">
     <link href="<%=Path%>/css/dashboard.css" rel="stylesheet">
+    <link href="<%=Path%>/css/grid.css" rel="stylesheet">
     <link href="<%=Path%>/css/author.css" rel="stylesheet">
     <script src="<%=Path%>/js/jquery-3.0.0.min.js"></script>
 <%--
     <script src="<%=Path%>/js/me/signup.js"></script>
 --%>
     <script>
+        $(function(){
+            init();
+        });
         //原生js的ajax实现，jquery的不兼容也是日了狗了
         var ajax = {
             get:function(url,fn){
@@ -84,9 +88,7 @@
                 }
             });
         }
-        $(function(){
-            init();
-        });
+
     </script>
 </head>
 <body>
@@ -108,7 +110,10 @@
         <%if(author!=null){%>
         <ul class="navbar-nav" style="margin-right: 50px;">
             <li class="nav-item">
-                <a class="nav-link user_font" onclick="item_tran('6')"><img src="<%=Path%>/image/author/messages.png" width="28px" height="28px"></a>
+                <a class="nav-link user_font" onclick="item_tran('6')">
+                    <img src="<%=Path%>/image/author/messages.png" width="28px" height="28px">
+                    <span style="color:orangered;" id="MessageNums"></span>
+                </a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle user_font" href="http://example.com" id="dropdown03"
@@ -152,7 +157,7 @@
             页面内容
         --%>
     <%if(author!=null){%>
-        <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3" id="main_0">
+        <main class="col-sm-9 offset-sm-3 col-md-11 offset-md-2 pt-3" id="main_0" style="margin-left: 140px;">
             <h2>个人资料</h2>
 
             <div id="show_info">
@@ -203,30 +208,61 @@
             </div>
         </main>
 
-        <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3" id="main_1">
+        <main class="col-sm-9 offset-sm-3 col-md-11 offset-md-2 pt-3" id="main_1" style="margin-left: 140px;">
             <h1>11</h1>
 
         </main>
 
-        <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3" id="main_2">
+        <main class="col-sm-9 offset-sm-3 col-md-11 offset-md-2 pt-3" id="main_2" style="margin-left: 140px;">
             <h1>222</h1>
 
         </main>
-        <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3" id="main_3">
+        <main class="col-sm-9 offset-sm-3 col-md-11 offset-md-2 pt-3" id="main_3" style="margin-left: 140px;">
             <h1>333</h1>
 
         </main>
-        <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3" id="main_4">
+        <main class="col-sm-9 offset-sm-3 col-md-11 offset-md-2 pt-3" id="main_4" style="margin-left: 140px;">
             <h1>444</h1>
 
         </main>
 
-        <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3" id="main_5">
+        <main class="col-sm-9 offset-sm-3 col-md-11 offset-md-2 pt-3" id="main_5" style="margin-left: 140px;">
             <h1>55</h1>
 
         </main>
-        <main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3" id="main_6">
-            <h1>message66 </h1>
+        <main class="col-sm-9 offset-sm-3 col-md-11 offset-md-2 pt-3" id="main_6" style="margin-left: 140px;">
+            <button type="button" class="btn btn-primary">历史消息</button>
+            <span style="margin-left:400px;font: 20px bold;color: blue;">消息查看</span>
+            <hr>
+            <div class="container" id="messageBox">
+                <div class="row" onclick="showMessage('me_12')">
+                    <div class="col-1">.col-1</div><div class="col-10">.col-10</div>
+                </div>
+            </div>
+
+            <div id="message" class="invisible"> </div>
+            <%--查看消息发送消息--%>
+            <div class="invisible" id="SendMessage">
+                <div id="history" class="historychat">
+                    <div class="row_box">
+                        34
+                    </div>
+
+                </div>
+                <div id="sendBox" class="inputBox">
+                    <input type="text" name="message" id="inputText" style="width: 600px;"/>
+                    <button type="button" onclick="send('<%=id%>')" class="btn btn-primary">发送</button>
+                </div>
+
+
+            </div>
+
+            <%--<div style="width: 100px;float: left;" class="message_title">
+                <button type="button">34</button>
+            </div>
+            <div style="float: left;" class="message_box">
+                <div></div>
+            </div>--%>
 
         </main>
     <%}%>
@@ -239,6 +275,7 @@
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="<%=Path%>/js/ie10-viewport-bug-workaround.js"></script>
 <script src="<%=Path%>/js/me/author.js"></script>
+<script src="<%=Path%>/js/me/socket.js"></script>
 
 </body>
 </html>

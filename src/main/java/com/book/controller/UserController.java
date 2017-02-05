@@ -1,10 +1,13 @@
 package com.book.controller;
 
 import com.book.bean.Author;
+import com.book.bean.Messages;
 import com.book.bean.Users;
 import com.book.dao.AuthorDao;
+import com.book.dao.MessageDao;
 import com.book.dao.UserDao;
 import com.book.service.UserService;
+import com.book.util.GetRunTime;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,19 +20,26 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by Myth on 2017/1/25 0025
+ * 没有setget方法也注入成功了，原因是？
  */
 @Controller
 @RequestMapping("/user")
 public class UserController {
+    @Autowired
+    GetRunTime Time;
     @Autowired
     UserService userService;
     @Autowired
     UserDao userDao;
     @Autowired
     AuthorDao authorDao;
+    @Autowired
+    MessageDao messageDao;
+
 
 
     private static org.slf4j.Logger Log = LoggerFactory.getLogger(UserController.class);
@@ -148,5 +158,62 @@ public class UserController {
             result="0";
         }
         return result;
+    }
+
+    @RequestMapping("/getMessageNum")
+    @ResponseBody
+    public String getNums(HttpSession session)throws Exception{
+        Author author = (Author) session.getAttribute("author");
+        List<Messages> messageList = null;
+        if(author!=null ){
+            messageList = messageDao.getAll("receive="+author.getAuthor_id()+" and readed=0");
+        }else{
+            Users users = (Users)session.getAttribute("user");
+            messageList = messageDao.getAll("receive="+users.getUser_id()+" and readed=0");
+        }
+        if(messageList!=null){
+            return messageList.size()+"";
+        }else{
+            return "";
+        }
+    }
+    public GetRunTime getTime() {
+        return Time;
+    }
+
+    public void setTime(GetRunTime time) {
+        Time = time;
+    }
+
+    public UserService getUserService() {
+        return userService;
+    }
+
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    public UserDao getUserDao() {
+        return userDao;
+    }
+
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    public AuthorDao getAuthorDao() {
+        return authorDao;
+    }
+
+    public void setAuthorDao(AuthorDao authorDao) {
+        this.authorDao = authorDao;
+    }
+
+    public MessageDao getMessageDao() {
+        return messageDao;
+    }
+
+    public void setMessageDao(MessageDao messageDao) {
+        this.messageDao = messageDao;
     }
 }
