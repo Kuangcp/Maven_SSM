@@ -2,13 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="myth.book">
 
-    <select id="getOne_Users" parameterType="long" resultType="Users">
-        select * from users where user_id=#{user_id}
-    </select>
-    <select id="getAll_Users" resultType="Users">
-        select * from users
-    </select>
-
     <select id="getOne_Author" parameterType="long" resultType="Author">
         select * from author where author_id=#{author_id}
     </select>
@@ -35,6 +28,19 @@
     </select>
     <select id="getAll_FatherType" resultType="FatherType">
         select * from father_type;
+    </select>
+    <select id="getOne_Messages" parameterType="Messages">
+        select * from messages where message_id=#{message_id}
+    </select>
+    <select id="getAll_Messages" parameterType="Messages">
+        select * from messages
+    </select>
+
+    <select id="getOne_Users" parameterType="long" resultType="Users">
+        select * from users where user_id=#{user_id}
+    </select>
+    <select id="getAll_Users" resultType="Users">
+        select * from users
     </select>
 
 </mapper>

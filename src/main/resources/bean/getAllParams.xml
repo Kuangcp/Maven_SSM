@@ -13,11 +13,6 @@
         </if>
     </sql>
 
-    <select id="getAll_Param_Users" parameterType="map" resultType="Users">
-        select * from users where
-        <include refid="QueryWithParam"/>
-    </select>
-
     <select id="getAll_Param_Author" parameterType="map" resultType="Author">
         select * from author where
         <include refid="QueryWithParam"/>
@@ -25,12 +20,22 @@
 
     <select id="getAll_Param_BookType" parameterType="map" resultType="BookType">
         select * from book_type where
-        <include refid="QueryWithParam"></include>
+        <include refid="QueryWithParam"/>
     </select>
 
     <select id="getAll_Param_Book" parameterType="map" resultType="Book">
         select * from book where
-        <include refid="QueryWithParam"></include>
+        <include refid="QueryWithParam"/>
+    </select>
+
+    <select id="getAll_Param_Messages" parameterType="map" resultType="Messages">
+        select * from messages WHERE
+          <include refid="QueryWithParam"/>
+    </select>
+
+    <select id="getAll_Param_Users" parameterType="map" resultType="Users">
+        select * from users where
+        <include refid="QueryWithParam"/>
     </select>
 
 </mapper>

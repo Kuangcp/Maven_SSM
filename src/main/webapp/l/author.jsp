@@ -1,7 +1,11 @@
-<%@ page import="com.book.bean.Author" %>
+<%@ page import="com.book.bean.*,com.book.util.*,com.book.dao.*,java.util.*" %>
+<%@ page import="com.book.service.MessageService" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf8"%>
 <%
     String Path = request.getContextPath();
+    MessageService messageService = (MessageService)SpringContext.getBean("messageService");
+
+    List messagesList = null;
     String sexName="";
     long id = 1L;
     Author author = (Author) session.getAttribute("author");
@@ -12,7 +16,9 @@
         if(author.getSex()==1) sexName ="男";
         else  if(author.getSex()==0)sexName="女";
         else sexName="*";
+        messagesList = messageService.getNowMessages(id);
     }
+
 %>
 <html>
 <head>
@@ -231,24 +237,50 @@
 
         </main>
         <main class="col-sm-9 offset-sm-3 col-md-11 offset-md-2 pt-3" id="main_6" style="margin-left: 140px;">
+            <button type="button" class="btn btn-primary" onclick="back()">返回</button>
             <button type="button" class="btn btn-primary">历史消息</button>
-            <span style="margin-left:400px;font: 20px bold;color: blue;">消息查看</span>
+            <span style="margin-left:380px;font: 20px bold;color: blue;" id="message_title">消息查看</span>
+            <button type="button" class="btn btn-primary" style="margin-left: 450px;" onclick="new_Message()">+</button>
             <hr>
+
             <div class="container" id="messageBox">
-                <div class="row" onclick="showMessage('me_12')">
-                    <div class="col-1">.col-1</div><div class="col-10">.col-10</div>
+                <%for (int i=0;i<messagesList.size();i++){ MessagesPlus p = (MessagesPlus) messagesList.get(i);String name = p.getReceive_name();%>
+                    <div class="row" onclick="showMessage('<%=name%>')" id="<%=name%>">
+                        <div class="col-1"><%=name%></div><div class="col-10">............</div>
+                    </div>
+                <%}%>
+                <%--<div class="row" onclick="showMessage('me_12')" id="me_12">
+                    <div class="col-1">me_12</div><div class="col-10">............</div>
                 </div>
+                <div class="row" onclick="showMessage('me_13')" id="me_13">
+                    <div class="col-1">me_13</div><div class="col-10">............</div>
+                </div>--%>
             </div>
 
-            <div id="message" class="invisible"> </div>
             <%--查看消息发送消息--%>
             <div class="invisible" id="SendMessage">
-                <div id="history" class="historychat">
-                    <div class="row_box">
+                <%for (int i=0;i<messagesList.size();i++){ MessagesPlus p = (MessagesPlus) messagesList.get(i);String name = p.getReceive_name();%>
+                    <div id="history_<%=name%>" class="historychat invisible">
+                        <div hidden id="<%=name%>_id"><%=id%></div>
+                        <div class="row_box">
+                            34
+                        </div>
+                    </div>
+                <%}%>
+                <%--<div id="history_me_12" class="historychat invisible">
+                    <div hidden id="me_12_id">2000000001</div>
+                    <div class="row_box me_box">
                         34
                     </div>
 
                 </div>
+                <div id="history_me_13" class="historychat invisible">
+                    <div hidden id="me_13_id">2000000002</div>
+                    <div class="row_box">
+                        34
+                    </div>
+
+                </div>--%>
                 <div id="sendBox" class="inputBox">
                     <input type="text" name="message" id="inputText" style="width: 600px;"/>
                     <button type="button" onclick="send('<%=id%>')" class="btn btn-primary">发送</button>

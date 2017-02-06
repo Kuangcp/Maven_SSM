@@ -1,5 +1,11 @@
 package com.test.SpringMVC;
 
+import com.book.bean.Messages;
+import com.book.bean.MessagesPlus;
+import com.book.dao.MessageDao;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
@@ -15,6 +21,8 @@ import java.util.concurrent.CopyOnWriteArraySet;
  */
 @ServerEndpoint("/message")
 public class WebSocketTest {
+    @Autowired
+    MessageDao messageDao;
     //静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
     private static int onlineCount = 0;
 
@@ -52,8 +60,18 @@ public class WebSocketTest {
      * @param session 可选的参数
      */
     @OnMessage
-    public void onMessage(String message, Session session) {
+    public void onMessage(String message, Session session) throws Exception{
         System.out.println("来自客户端的消息:" + message);
+
+        ObjectMapper mapper = new ObjectMapper();
+        MessagesPlus as = mapper.readValue(message,MessagesPlus.class);
+        messageDao.save(new Messages(as));
+//        String json = "["+message+"]";
+//        List<Messages> list = JSON.parseArray(message, Messages.class);
+//        for(int i=0;i<list.size();++i){
+//            messageDao.save(list.get(i));
+//        }
+
         //群发消息
         for(WebSocketTest item: webSocketSet){
             try {
@@ -96,5 +114,13 @@ public class WebSocketTest {
 
     public static synchronized void subOnlineCount() {
         WebSocketTest.onlineCount--;
+    }
+
+    public MessageDao getMessageDao() {
+        return messageDao;
+    }
+
+    public void setMessageDao(MessageDao messageDao) {
+        this.messageDao = messageDao;
     }
 }

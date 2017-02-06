@@ -20,6 +20,10 @@
     background-image: -webkit-gradient(linear,0 0,0 30,from(hsla(0,0%,100%,0.6)),to(hsla(0,0%,100%,0)));
     border: 1px solid lightskyblue;
 }
+.me_box{
+    /*position: absolute;*/
+    margin-left:800px;
+}
 .inputBox{
     position: absolute;
     top:560px;

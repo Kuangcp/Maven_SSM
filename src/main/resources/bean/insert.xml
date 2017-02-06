@@ -2,6 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="myth.book">
 
+    <insert id="insert_Author" parameterType="Author">
+        insert into author (name, sex, id_card, true_name, password, qq, phone, email)
+        values(#{name},#{sex},#{id_card},#{true_name},#{password},#{qq},#{phone},#{email})
+    </insert>
+
     <insert id="insert_FatherType" parameterType="FatherType">
         insert into father_type(type_name, sex)
           values(#{type_name},#{sex});
@@ -80,12 +85,9 @@
           values(#{name},#{sex},#{birthday},#{password},#{email})
     </insert>
 
-    <insert id="insert_Author" parameterType="Author">
-        insert into author (name, sex, id_card, true_name, password, qq, phone, email)
-          values(#{name},#{sex},#{id_card},#{true_name},#{password},#{qq},#{phone},#{email})
+    <insert id="insert_Messages" parameterType="Messages">
+        insert into messages ( send, receive, title, message, readed, send_time)
+          values(#{send},#{receive},#{title},#{message},#{readed},#{send_time})
     </insert>
-    
-
-
 
 </mapper>
