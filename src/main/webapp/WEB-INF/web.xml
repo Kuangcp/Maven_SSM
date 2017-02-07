@@ -18,6 +18,7 @@
   </context-param>
   <!--编码过滤器-->
   <filter>
+
     <filter-name>encodingFilter</filter-name>
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
     <init-param>
@@ -48,6 +49,7 @@
       <param-value>classpath:springmvc.xml</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
+    <async-supported>true</async-supported>
   </servlet>
   <servlet-mapping>
     <servlet-name>springMVC</servlet-name>
