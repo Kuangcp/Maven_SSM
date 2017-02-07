@@ -18,12 +18,14 @@ public class MessagesPlus {
     @JsonFormat(shape=JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
     private Date send_time;
     private String receive_name;
+    private String send_name;
 
-    //空构造器不能少 艹
+    //空构造器不能少
     public MessagesPlus(){}
-    public MessagesPlus(long message_id, long send, long receive, String receive_name,String title, String message, Date send_time, int readed) {
+    public MessagesPlus(long message_id, long send,String send_name, long receive, String receive_name,String title, String message, Date send_time, int readed) {
         this.message_id = message_id;
         this.send = send;
+        this.send_name = send_name;
         this.receive = receive;
         this.title = title;
         this.message = message;
@@ -31,8 +33,8 @@ public class MessagesPlus {
         this.receive_name = receive_name;
         this.send_time = send_time;
     }
-    public MessagesPlus(Messages me,String receive_name){
-        this(me.getMessage_id(),me.getSend(),me.getReceive(),receive_name,me.getTitle(),me.getMessage(),me.getSend_time(),me.getReaded());
+    public MessagesPlus(Messages me,String receive_name,String send_name){
+        this(me.getMessage_id(),me.getSend(),send_name,me.getReceive(),receive_name,me.getTitle(),me.getMessage(),me.getSend_time(),me.getReaded());
     }
 
     public String getReceive_name() {
@@ -99,12 +101,21 @@ public class MessagesPlus {
         this.send_time = send_time;
     }
 
+    public String getSend_name() {
+        return send_name;
+    }
+
+    public void setSend_name(String send_name) {
+        this.send_name = send_name;
+    }
+
     @Override
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return "MessagesPlus{" +
                 "message_id=" + message_id +
                 ", send=" + send +
+                ",send_name="+send_name+
                 ", receive=" + receive +
                 ", title='" + title + '\'' +
                 ", message='" + message + '\'' +

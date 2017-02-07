@@ -1,12 +1,17 @@
 <%@ page import="com.book.bean.*,com.book.util.*,com.book.dao.*,java.util.*" %>
 <%@ page import="com.book.service.MessageService" %>
+<%@ page import="org.springframework.context.ApplicationContext" %>
+<%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf8"%>
 <%
     String Path = request.getContextPath();
-    MessageService messageService = (MessageService)SpringContext.getBean("messageService");
+    ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
+    MessageService messageService = (MessageService)context.getBean("messageService");
 
-    List messagesList = null;
+    Map<String,List<Messages>> messagesList= null;
+    Set<String> SendNames = null;//发送者姓名
     String sexName="";
+    String author_name="";
     long id = 1L;
     Author author = (Author) session.getAttribute("author");
     if(author==null) {
@@ -16,7 +21,9 @@
         if(author.getSex()==1) sexName ="男";
         else  if(author.getSex()==0)sexName="女";
         else sexName="*";
-        messagesList = messageService.getNowMessages(id);
+        author_name = author.getName();
+        messagesList = messageService.getMessageList(id,0);
+        SendNames = messagesList.keySet();
     }
 
 %>
@@ -160,9 +167,9 @@
         </nav>
 
         <%--
-            页面内容
+            页面内容 防止空指针异常
         --%>
-    <%if(author!=null){%>
+<%if(author!=null){%>
         <main class="col-sm-9 offset-sm-3 col-md-11 offset-md-2 pt-3" id="main_0" style="margin-left: 140px;">
             <h2>个人资料</h2>
 
@@ -239,65 +246,52 @@
         <main class="col-sm-9 offset-sm-3 col-md-11 offset-md-2 pt-3" id="main_6" style="margin-left: 140px;">
             <button type="button" class="btn btn-primary" onclick="back()">返回</button>
             <button type="button" class="btn btn-primary">历史消息</button>
-            <span style="margin-left:380px;font: 20px bold;color: blue;" id="message_title">消息查看</span>
-            <button type="button" class="btn btn-primary" style="margin-left: 450px;" onclick="new_Message()">+</button>
-            <hr>
+            <button type="button" class="btn btn-primary" style="" onclick="new_Message()">+</button>
+            <span style="margin-left:300px;font: 20px bold;color: blue;" id="message_title">消息查看</span>
 
+            <hr>
             <div class="container" id="messageBox">
-                <%for (int i=0;i<messagesList.size();i++){ MessagesPlus p = (MessagesPlus) messagesList.get(i);String name = p.getReceive_name();%>
-                    <div class="row" onclick="showMessage('<%=name%>')" id="<%=name%>">
-                        <div class="col-1"><%=name%></div><div class="col-10">............</div>
+                <%for (String Re_name:SendNames){ %>
+                    <div class="row" style="float:left;margin-right: 20px;" onclick="showMessage('<%=Re_name%>')" id="<%=Re_name%>">
+                        <div class="col-12"><%=Re_name%></div>
                     </div>
                 <%}%>
-                <%--<div class="row" onclick="showMessage('me_12')" id="me_12">
-                    <div class="col-1">me_12</div><div class="col-10">............</div>
+                <%--
+                <div class="row" onclick="showMessage('me_12')" id="me_12">
+                    <div class="col-2">me_12</div>
                 </div>
-                <div class="row" onclick="showMessage('me_13')" id="me_13">
-                    <div class="col-1">me_13</div><div class="col-10">............</div>
-                </div>--%>
+                --%>
             </div>
 
             <%--查看消息发送消息--%>
-            <div class="invisible" id="SendMessage">
-                <%for (int i=0;i<messagesList.size();i++){ MessagesPlus p = (MessagesPlus) messagesList.get(i);String name = p.getReceive_name();%>
-                    <div id="history_<%=name%>" class="historychat invisible">
-                        <div hidden id="<%=name%>_id"><%=id%></div>
+            <div class="invisible " id="SendMessage">
+                <%for (String Re_name:SendNames){  List<Messages> list = messagesList.get(Re_name);%>
+                    <div id="history_<%=Re_name%>" class="historychat invisible">
+                        <%--获取已有消息的发送方就是此次的接收方--%>
+                        <%for(Messages me:list){%>
+                        <div hidden id="<%=Re_name%>_id"><%=me.getSend()%></div>
                         <div class="row_box">
-                            34
+                            <%=me.getMessage()%>
                         </div>
+                        <%}%>
                     </div>
                 <%}%>
-                <%--<div id="history_me_12" class="historychat invisible">
+                <%--
+                <div id="history_me_12" class="historychat invisible">
                     <div hidden id="me_12_id">2000000001</div>
                     <div class="row_box me_box">
                         34
                     </div>
-
                 </div>
-                <div id="history_me_13" class="historychat invisible">
-                    <div hidden id="me_13_id">2000000002</div>
-                    <div class="row_box">
-                        34
-                    </div>
-
-                </div>--%>
-                <div id="sendBox" class="inputBox">
+                --%>
+                <div id="sendBox" class="inputBox ">
                     <input type="text" name="message" id="inputText" style="width: 600px;"/>
-                    <button type="button" onclick="send('<%=id%>')" class="btn btn-primary">发送</button>
+                    <button type="button" onclick="send('<%=id%>','<%=author_name%>')" class="btn btn-primary">发送</button>
                 </div>
 
-
             </div>
-
-            <%--<div style="width: 100px;float: left;" class="message_title">
-                <button type="button">34</button>
-            </div>
-            <div style="float: left;" class="message_box">
-                <div></div>
-            </div>--%>
-
         </main>
-    <%}%>
+<%}%>
     </div>
 </div>
 <!-- Placed at the end of the document so the pages load faster -->

@@ -1,13 +1,16 @@
 package view;
 
+import Spring.SpringContext;
+import com.book.bean.Messages;
 import com.book.bean.MessagesPlus;
 import com.book.service.MessageService;
-import com.book.util.SpringContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Myth on 2017/2/6 0006
@@ -49,5 +52,27 @@ public class TestJson {
         for(MessagesPlus p :list){
             Log.info(p.toString());
         }
+    }
+    @Test
+    public void testMeQuery()throws Exception{
+        MessageService s = (MessageService) SpringContext.getBean("messageService");
+        Map<String,List<Messages>> result =  s.getMessageList(2000000001,0);
+        Set<String> keys =  result.keySet();
+        for(String key:keys){
+            List<Messages> list =  result.get(key);
+            Log.debug("--------------");
+            for(Messages me:list){
+                Log.info(key+":"+me.toString());
+            }
+
+        }
+        // 测试通过
+//        MessageDao dao = (MessageDao)SpringContext.getBean("messageDao");
+//        List list = dao.getAll("receive="+2000000001+" and readed="+0+" group by send");
+//        for(int i=0;i<list.size();i++){
+//            Messages messages = (Messages) list.get(i);
+//            Log.info(messages.toString());
+//        }
+
     }
 }

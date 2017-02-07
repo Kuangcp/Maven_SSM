@@ -1,8 +1,13 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" import="com.book.bean.*,com.book.util.*,com.book.dao.BookTypeDao,java.util.*" pageEncoding="utf8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" import="com.book.bean.BookType,com.book.bean.FatherType,com.book.bean.Users,com.book.dao.BookTypeDao" pageEncoding="utf8" %>
+<%@ page import="com.book.service.BookService" %>
+<%@ page import="org.springframework.context.ApplicationContext" %>
+<%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
+<%@ page import="java.util.List" %>
 <%
     String Path = request.getContextPath();
-    BookTypeDao dao = (BookTypeDao)SpringContext.getBean("bookTypeDao");
-    List list = dao.getAllTypes();
+    ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
+    BookService bookService = (BookService)context.getBean("bookService");
+    List list = bookService.getAllTypes();
 
 //    System.out.println(Path);
     Users u = null;

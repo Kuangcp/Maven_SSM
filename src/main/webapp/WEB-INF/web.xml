@@ -2,8 +2,8 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://java.sun.com/xml/ns/javaee"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
-         http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-         id="WebApp_ID" version="2.5">
+         http://java.sun.com/xml/ns/javaee/web-app_3_1.xsd"
+         id="WebApp_ID" version="3.0">
   <display-name>Archetype Created Web Application</display-name>
 
   <welcome-file-list>
@@ -11,10 +11,10 @@
   </welcome-file-list>
   <!--Spring配置文件路径-->
   <context-param>
-    <param-name>logbackConfigLocation</param-name>
-    <param-value>classpath*:Logback.xml</param-value>
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath*:application.xml</param-value>
+    <!--<param-name>logbackConfigLocation</param-name>
+    <param-value>classpath*:Logback.xml</param-value>-->
   </context-param>
   <!--编码过滤器-->
   <filter>
@@ -30,9 +30,9 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
-  <listener>
+  <!--<listener>
     <listener-class>ch.qos.logback.ext.spring.web.LogbackConfigListener</listener-class>
-  </listener>
+  </listener>-->
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
