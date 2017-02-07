@@ -42,6 +42,7 @@
     <script>
         $(function(){
             init();
+            connect();
         });
         //原生js的ajax实现，jquery的不兼容也是日了狗了
         var ajax = {
@@ -300,8 +301,8 @@
 <script src="<%=Path%>/js/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="<%=Path%>/js/ie10-viewport-bug-workaround.js"></script>
+<script src="<%=Path%>/js/sockjs-0.3.min.js"></script>
 <script src="<%=Path%>/js/me/author.js"></script>
-<script src="<%=Path%>/js/me/socket.js"></script>
 
 </body>
 </html>

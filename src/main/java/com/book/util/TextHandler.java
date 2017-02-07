@@ -18,7 +18,7 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 public class TextHandler extends WebMvcConfigurerAdapter implements WebSocketConfigurer{
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(systemWebSocketHandler(),"/message");
+        //registry.addHandler(systemWebSocketHandler(),"/message");
         registry.addHandler(systemWebSocketHandler(),"/message/sockjs").setAllowedOrigins("*").withSockJS();
 
     }

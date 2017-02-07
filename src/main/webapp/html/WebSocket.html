@@ -34,7 +34,7 @@
         }
     </style>
 
-    <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
+    <script src="../js/sockjs-0.3.min.js"></script>
 
     <script type="text/javascript">
         var ws = null;
@@ -52,6 +52,7 @@
                 alert('Select whether to use W3C WebSocket or SockJS');
                 return;
             }
+            console.log(url);
 
 
             //ws = new WebSocket('ws://192.168.10.107:8080/mspjapi/webSocketServer');/* (url.indexOf('sockjs') != -1) ?
@@ -83,6 +84,7 @@
             setConnected(false);
         }
 
+        //发出数据函数
         function echo() {
             if (ws != null) {
                 var message = document.getElementById('message').value;
@@ -163,9 +165,5 @@
         <div id="console"></div>
     </div>
 </div>
-
-<a href="echoendpoint.jsp">echoendpoint test</a>
-<a href="websocket2.jsp">echoendpoint test</a>
-
 </body>
 </html>

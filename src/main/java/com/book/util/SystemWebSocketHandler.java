@@ -9,11 +9,11 @@ import org.springframework.web.socket.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by Myth on 2017/2/7
  * 使用Spring WebSocket是可以同处于 IOC容器内的，调用方法就方便了
+ *
  */
 @Component
 public class SystemWebSocketHandler implements WebSocketHandler {
@@ -39,11 +39,27 @@ public class SystemWebSocketHandler implements WebSocketHandler {
 
     @Override
     public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
-        System.out.println("handleMessage" + message.toString());
-        log.debug("收到：" + message.toString());
-        //sendMessageToUsers();
+//        System.out.println("handleMessage" + message.toString());
+        log.debug("收到：" + message.getPayload());
+        String tempp = message.getPayload().toString();
+        sendMessageToUsers(new TextMessage(tempp));
+        //处理JSON 得以转化保存
+        /*ObjectMapper mapper = new ObjectMapper();
+        String json = message.toString();
+        String temp[]= json.split(",");
+        json = "";
+        for(int i=0;i<temp.length;i++){
+            if(!temp[i].startsWith("\"receive_name") && !temp[i].startsWith("\"send_name")){
+                json+=temp[i]+",";
+            }
+        }
+        json = json.substring(0,json.length()-1);
+        Messages as = mapper.readValue(json,Messages.class);
+        messageDao.save(as);*/
 
-        session.sendMessage(new TextMessage(new Date() + ""));
+        //回馈数据
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        session.sendMessage(new TextMessage(sdf.format(new Date()) + " 服务器回馈数据"));
     }
 
     @Override
