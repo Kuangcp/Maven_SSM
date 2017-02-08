@@ -1,6 +1,8 @@
 package com.book.util;
 
+import com.book.bean.Messages;
 import com.book.dao.MessageDao;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,30 +34,37 @@ public class SystemWebSocketHandler implements WebSocketHandler {
         log.debug("ConnectionEstablished");
         users.add(session);
 
-        session.sendMessage(new TextMessage("connect"));
-        session.sendMessage(new TextMessage("new_msg"));
+       // session.sendMessage(new TextMessage("connect"));
+       // session.sendMessage(new TextMessage("new_msg"));
 
     }
 
     @Override
     public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
 //        System.out.println("handleMessage" + message.toString());
-        log.debug("收到：" + message.getPayload());
-        String tempp = message.getPayload().toString();
-        sendMessageToUsers(new TextMessage(tempp));
-        //处理JSON 得以转化保存
-        /*ObjectMapper mapper = new ObjectMapper();
-        String json = message.toString();
-        String temp[]= json.split(",");
-        json = "";
-        for(int i=0;i<temp.length;i++){
-            if(!temp[i].startsWith("\"receive_name") && !temp[i].startsWith("\"send_name")){
-                json+=temp[i]+",";
+        try {
+            log.debug("收到：" + message.getPayload());
+            String tempp = message.getPayload().toString();
+            sendMessageToUsers(new TextMessage(tempp));
+            //处理JSON 得以转化保存
+            ObjectMapper mapper = new ObjectMapper();
+            String json = message.getPayload().toString();
+            String temp[] = json.split(",");
+            json = "";
+            for (int i = 0; i < temp.length; i++) {
+                if (!temp[i].startsWith("\"receive_name") && !temp[i].startsWith("\"send_name")) {
+                    json += temp[i] + ",";
+                }
             }
+            json = json.substring(0, json.length() - 1);
+            log.info("json:"+json);
+            Messages as = mapper.readValue(json, Messages.class);
+            messageDao.save(as);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw e;
         }
-        json = json.substring(0,json.length()-1);
-        Messages as = mapper.readValue(json,Messages.class);
-        messageDao.save(as);*/
+
 
         //回馈数据
 //        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

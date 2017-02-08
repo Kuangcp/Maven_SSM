@@ -38,14 +38,14 @@ public class BaseDaoImpl <T,Id_Type extends Serializable> extends MybatisSession
 
     @Override
     public boolean delete(Object o) throws Exception {
-        boolean flag = true;
+        boolean flag = false;
         try{
         SqlSession session = getSession();
         session.delete("myth.book.delete_"+className,o);
         session.commit();
+        flag=true;
         }catch(Exception e){
             e.printStackTrace();
-            flag = false;
             throw e;
         }
         return flag;
@@ -67,19 +67,21 @@ public class BaseDaoImpl <T,Id_Type extends Serializable> extends MybatisSession
     }
 
     @Override
-    public List getAll() throws Exception {
+    public List<T> getAll() throws Exception {
         return getSession().selectList("myth.book.getAll_"+className);
     }
 
     @Override
-    public List getAll(String param) throws Exception {
+    public List<T> getAll(String param) throws Exception {
         Map map = new HashMap();
         map.put("param",param);
-        return getSession().selectList("myth.book.getAll_Param_"+className,map);
+        SqlSession session = getSession();
+        session.clearCache();
+        return session.selectList("myth.book.getAll_Param_"+className,map);
     }
 
     @Override
-    public List getAll(List params) throws Exception {
+    public List<T> getAll(List params) throws Exception {
         Map map = new HashMap();
         map.put("param_list",params);
         return getSession().selectList("myth.book.getAll_Param_"+className,map);
@@ -89,7 +91,7 @@ public class BaseDaoImpl <T,Id_Type extends Serializable> extends MybatisSession
         要特别注意id的类型，是和具体继承的dao的类型要一致，Long就要加上L后缀
      */
     @Override
-    public Object getOne(Serializable id) throws Exception {
+    public T getOne(Serializable id) throws Exception {
         return getSession().selectOne("myth.book.getOne_"+className,id);
     }
 }

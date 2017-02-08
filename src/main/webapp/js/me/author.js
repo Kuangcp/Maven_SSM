@@ -2,8 +2,8 @@
  * Created by l on 2017/1/21 0021.
  */
 var receiver; //接收方名字
-var send_name;
-var sendor; //自己
+var send_name;//自己name
+var sendor; //自己id
 function init(){
     // $('#main_2').css({'display':'none'});
     Noshow();
@@ -33,7 +33,7 @@ function showMessage(data){
     $('#history_'+data).attr('class','historychat')
     receiver = data;
     document.getElementById('message_title').innerText = data;
-    //console.log(data);
+   // console.log("赋值成功："+data);
 }
 function back(){
     document.getElementById('message_title').innerText = '消息查看';
@@ -45,30 +45,31 @@ function new_Message() {
 }
 //---------------------------------------------------
 var ws = null;
-function connect() {
+function connect(sender,sendname) {
+    sendor = sender;
+    send_name = sendname;
     ws = new SockJS("http://localhost/Book/message/sockjs");
 
     ws.onopen = function () {
         // setConnected(true);
-        console.log('Info: connection opened.');
+        //console.log('Info: connection opened.');
     };
 
     ws.onmessage = function (event) {
-        console.log('Received: ' + event.data);
+        // console.log('收到的json: ' + event.data);
         setMessageInnerHTML(event.data);
     };
 
     ws.onclose = function (event) {
         // setConnected(false);
-        console.log('Info: connection closed.');
-        console.log(event);
+        //console.log('Info: connection closed.');
+        //console.log(event);
     };
 }
 //发出数据函数
-function send(sender,sendname) {
+function send() {
     if (ws != null) {
-        sendor = sender;
-        send_name = sendname;
+
         var dates = new Date();
         var month = dates.getMonth()+1;
         var day = dates.getUTCDate();
@@ -77,14 +78,13 @@ function send(sender,sendname) {
         var date =(1900+dates.getYear())+"-"+""+month+"-"+day+" "+dates.getHours()+":"+dates.getMinutes()+":"+dates.getSeconds();
         //console.log(dates.getDate()+""+dates.getUTCDate());
         var message = document.getElementById('inputText').value;
-        console.log(receiver);
+        //console.log(receiver);
         var receive_id = document.getElementById(receiver+'_id').innerText;
-        message = "{\"send\":\""+sender+"\",\"send_name\":\""+send_name+"\",\"receive\":"+receive_id+",\"receive_name\":\""+receiver+"\",\"title\":\"发送至"+receive_id+" \",\"message\":\""+message+"\",\"send_time\":\""+date+"\",\"readed\":0}";
-        console.log("发送的 ："+message);
+        message = "{\"send\":\""+sendor+"\",\"send_name\":\""+send_name+"\",\"receive\":"+receive_id+",\"receive_name\":\""+receiver+"\",\"title\":\""+send_name+" - To - "+receiver+" \",\"message\":\""+message+"\",\"send_time\":\""+date+"\",\"readed\":0}";
         //清除内容
         $('#inputText').val("");
         ws.send(message);
-        console.log('Sent: ' + message);
+        //console.log('发出的json: ' + message);
 
         // ws.send(message);
     } else {
@@ -107,26 +107,35 @@ function setMessageInnerHTML(innerHTML) {
     }else{
         innerHTML='';
     }
-
+    var receive_id = document.getElementById(receiver+'_id').innerText;
+    var json_receive = mess.receive_name;
+    var history;
     //如果是当前窗口，直接添加
-    if(receiver==mess.receive_name){
+    // console.log("当前窗口："+receive_id+"--消息发送方："+mess.send+"--得到的："+receiver+"--添加的："+innerHTML);
+    if(receive_id==mess.send){
         document.getElementById('history_'+receiver).innerHTML += innerHTML + '';
-        var history = document.getElementById('history_'+receiver);
+        history = document.getElementById('history_'+receiver);
     }else{
+        // console.log("budeng---receiver="+receiver+",send_name="+send_name);
         var div = document.getElementById('history_'+receiver);
-        if(div==null){
-            var title="<div class='row' onclick='showMessage("+send_name+")' id='"+send_name+"'><div class='col-2' style='float:left;'>"+send_name+"</div></div>";
-            document.getElementById('messageBox').innerHTML += title + '';
-            var content = "<div id='history_'"+receiver+" class='historychat invisible'> <div class='row_box'>"+message+"</div></div>";
-            document.getElementById('SendMessage').innerHTML += content + '';
+        if(div==null || div==undefined){
+            //当收到的消息是当前没有这个div时，创建一个条目出来，BUG挺多，弃用
+            // var title="<div class='row' onclick='showMessage("+mess.send_name+")' id='"+mess.send_name+"'><div class='col-2'>"+mess.send_name+"</div></div>";
+            // document.getElementById('messageBox').innerHTML += title + '';
+            // var content = "<div id='history_'"+json_receive+" class='historychat invisible'><div hidden id='"+mess.send+"_id'>"+mess.send+"</div> <div class='row_box'>"+message+"</div></div>";
+            // document.getElementById('SendMessage').innerHTML += content + '';
         }else{
-            document.getElementById('history_'+receiver).innerHTML += innerHTML + '';
-            var history = document.getElementById('history_'+receiver);
+            // console.log('追加：history_'+mess.send_name);
+            var current = document.getElementById('history_'+mess.send_name);
+            if(current==null || current==undefined){
+                current = document.getElementById('history_'+receiver);
+            }
+            current.innerHTML += innerHTML + '';
+            history = document.getElementById('history_'+receiver);
         }
     }
     history.scrollTop = history.scrollHeight;
-    console.log(innerHTML);
+    //console.log(innerHTML);
 
 }
-//现在的BUG是，客户端接收数据是正确的，不是自己的数据不接收，但是js写div的时候是写在了当前活动的消息列表div上，而不是正确的发送方的div上，
-//后台得到的数据只是对方发来的数据，应该加上自己的数据，做到和QQ一样
+//记录对方id的机制要改，加载消息要限制最近30条，其他的在历史记录里分页查看

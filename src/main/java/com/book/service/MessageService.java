@@ -22,14 +22,14 @@ import java.util.Map;
 @Service
 public class MessageService {
     @Autowired
-    UserDao userDao;
+    private UserDao userDao;
     @Autowired
-    AuthorDao authorDao;
+    private AuthorDao authorDao;
     @Autowired
-    MessageDao messageDao;
+    private MessageDao messageDao;
     private static org.slf4j.Logger Log = LoggerFactory.getLogger(MessageService.class);
 
-    /**
+    /**                  已弃用
      * 获取未读取的消息
      * @param id
      * @return List<MessagesPlus>
@@ -59,7 +59,6 @@ public class MessageService {
         return lists;
     }
 
-
     /**
      * 得到用户收到的所有消息
      *
@@ -76,7 +75,8 @@ public class MessageService {
             for (int i = 0; i < messages.size(); i++) {
                 long temp_id = ((Messages) messages.get(i)).getSend();
                 String send_name = getName(temp_id);
-                List<Messages> messagesList = messageDao.getAll("receive=" + id + " and send=" + temp_id + " and readed=" + readed + " order by send_time");
+                String grouptemp="("+id+","+temp_id+")";
+                List<Messages> messagesList = messageDao.getAll("receive in" + grouptemp + " and send in" + grouptemp + " and readed=" + readed + " order by send_time");
                 result.put(send_name, messagesList);
             }
         }catch (Exception e){

@@ -42,7 +42,7 @@
     <script>
         $(function(){
             init();
-            connect();
+            connect('<%=id%>','<%=author_name%>');
         });
         //原生js的ajax实现，jquery的不兼容也是日了狗了
         var ajax = {
@@ -266,14 +266,21 @@
 
             <%--查看消息发送消息--%>
             <div class="invisible " id="SendMessage">
-                <%for (String Re_name:SendNames){  List<Messages> list = messagesList.get(Re_name);%>
+                <%for (String Re_name:SendNames){  List<Messages> list = messagesList.get(Re_name);boolean flag=true;%>
                     <div id="history_<%=Re_name%>" class="historychat invisible">
                         <%--获取已有消息的发送方就是此次的接收方--%>
-                        <%for(Messages me:list){%>
-                        <div hidden id="<%=Re_name%>_id"><%=me.getSend()%></div>
-                        <div class="row_box">
-                            <%=me.getMessage()%>
-                        </div>
+
+                        <%for(Messages me:list){long re_id = me.getReceive();%>
+                            <%if(flag && id!=me.getSend()){%><div hidden id="<%=Re_name%>_id"><%=me.getSend()%></div><% flag=false;}%>
+                            <%if(id==re_id){%>
+                                <div class="row_box">
+                                    <%=me.getMessage()%>
+                                </div>
+                            <%}else{%>
+                                <div class="row_box me_box">
+                                    <%=me.getMessage()%>
+                                </div>
+                            <%}%>
                         <%}%>
                     </div>
                 <%}%>
@@ -287,7 +294,7 @@
                 --%>
                 <div id="sendBox" class="inputBox ">
                     <input type="text" name="message" id="inputText" style="width: 600px;"/>
-                    <button type="button" onclick="send('<%=id%>','<%=author_name%>')" class="btn btn-primary">发送</button>
+                    <button type="button" onclick="send()" class="btn btn-primary">发送</button>
                 </div>
 
             </div>
