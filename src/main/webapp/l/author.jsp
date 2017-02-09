@@ -36,9 +36,7 @@
     <link href="<%=Path%>/css/grid.css" rel="stylesheet">
     <link href="<%=Path%>/css/author.css" rel="stylesheet">
     <script src="<%=Path%>/js/jquery-3.0.0.min.js"></script>
-<%--
-    <script src="<%=Path%>/js/me/signup.js"></script>
---%>
+
     <script>
         $(function(){
             init();
@@ -106,11 +104,6 @@
     </script>
 </head>
 <body>
-<%--<%
- String email = request.getParameter("email");
- System.out.println(email);
-%>
-<%=email%>--%>
 <nav class="navbar navbar-toggleable-md navbar-inverse fixed-top bg-inverse">
     <button class="navbar-toggler navbar-toggler-right hidden-lg-up" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -257,11 +250,6 @@
                         <div class="col-12"><%=name%></div>
                     </div>
                 <%}%>
-                <%--
-                <div class="row" onclick="showMessage('me_12')" id="me_12">
-                    <div class="col-2">me_12</div>
-                </div>
-                --%>
             </div>
 
             <%--查看消息发送消息--%>
@@ -285,14 +273,6 @@
                         <%}%>
                     </div>
                 <%}%>
-                <%--
-                <div id="history_me_12" class="historychat invisible">
-                    <div hidden id="me_12_id">2000000001</div>
-                    <div class="row_box me_box">
-                        34
-                    </div>
-                </div>
-                --%>
                 <div id="sendBox" class="inputBox ">
                     <button type="button" class="btn btn-primary">历史消息</button>
                     <input type="text" name="message" id="inputText" style="width: 400px;"/>
