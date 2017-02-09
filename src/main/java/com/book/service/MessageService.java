@@ -76,8 +76,8 @@ public class MessageService {
                 long temp_id = ((Messages) messages.get(i)).getSend();
                 String send_name = getName(temp_id);
                 String grouptemp="("+id+","+temp_id+")";
-                List<Messages> messagesList = messageDao.getAll("receive in" + grouptemp + " and send in" + grouptemp + " and readed=" + readed + " order by send_time");
-                result.put(send_name, messagesList);
+                List<Messages> messagesList = messageDao.getAll("receive in" + grouptemp + " and send in" + grouptemp + " and readed=" + readed + " order by send_time desc limit 0,30");
+                result.put(send_name+"#"+temp_id, messagesList);
             }
         }catch (Exception e){
             e.printStackTrace();

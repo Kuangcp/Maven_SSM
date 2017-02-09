@@ -246,15 +246,15 @@
         </main>
         <main class="col-sm-9 offset-sm-3 col-md-11 offset-md-2 pt-3" id="main_6" style="margin-left: 140px;">
             <button type="button" class="btn btn-primary" onclick="back()">返回</button>
-            <button type="button" class="btn btn-primary">历史消息</button>
+
             <button type="button" class="btn btn-primary" style="" onclick="new_Message()">+</button>
             <span style="margin-left:300px;font: 20px bold;color: blue;" id="message_title">消息查看</span>
 
             <hr>
             <div class="container" id="messageBox">
-                <%for (String Re_name:SendNames){ %>
-                    <div class="row" style="float:left;margin-right: 20px;" onclick="showMessage('<%=Re_name%>')" id="<%=Re_name%>">
-                        <div class="col-12"><%=Re_name%></div>
+                <%for (String Re_name:SendNames){ String name = Re_name.split("#")[0];%>
+                    <div class="row" style="float:left;margin-right: 20px;" onclick="showMessage('<%=name%>')" id="<%=name%>">
+                        <div class="col-12"><%=name%></div>
                     </div>
                 <%}%>
                 <%--
@@ -266,18 +266,19 @@
 
             <%--查看消息发送消息--%>
             <div class="invisible " id="SendMessage">
-                <%for (String Re_name:SendNames){  List<Messages> list = messagesList.get(Re_name);boolean flag=true;%>
-                    <div id="history_<%=Re_name%>" class="historychat invisible">
+                <%for (String Re_name:SendNames){  String name = Re_name.split("#")[0]; List<Messages> list = messagesList.get(Re_name);%>
+                    <div id="history_<%=name%>" class="historychat invisible">
                         <%--获取已有消息的发送方就是此次的接收方--%>
-
-                        <%for(Messages me:list){long re_id = me.getReceive();%>
-                            <%if(flag && id!=me.getSend()){%><div hidden id="<%=Re_name%>_id"><%=me.getSend()%></div><% flag=false;}%>
-                            <%if(id==re_id){%>
-                                <div class="row_box">
-                                    <%=me.getMessage()%>
+                        <%for(int i=list.size()-1;i>=0;i--){Messages me =list.get(i); boolean flag=true;%>
+                            <%if(flag){flag=false;%>
+                                <div hidden id="<%=name%>_id"><%=Re_name.split("#")[1]%></div>
+                            <%}%>
+                            <%if(id==me.getSend()){%>
+                                <div class="row_box me_box">
+                                <%=me.getMessage()%>
                                 </div>
                             <%}else{%>
-                                <div class="row_box me_box">
+                                <div class="row_box">
                                     <%=me.getMessage()%>
                                 </div>
                             <%}%>
@@ -293,7 +294,8 @@
                 </div>
                 --%>
                 <div id="sendBox" class="inputBox ">
-                    <input type="text" name="message" id="inputText" style="width: 600px;"/>
+                    <button type="button" class="btn btn-primary">历史消息</button>
+                    <input type="text" name="message" id="inputText" style="width: 400px;"/>
                     <button type="button" onclick="send()" class="btn btn-primary">发送</button>
                 </div>
 
