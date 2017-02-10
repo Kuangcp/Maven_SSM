@@ -2,20 +2,18 @@ package com.book.bean;
 
 public class PurchaseList {
     private long purchase_id;
-    private int chapter_id;
     private long user_id;
-    private long book_id;
+    private long catalog_id;
     private int cash_id;
     private java.util.Date deal_time;
     private int pay_money;
 
     public PurchaseList(){}
-    public PurchaseList(long purchase_id, int chapter_id, long user_id, long book_id, 
+    public PurchaseList(long purchase_id,long user_id, long catalog_id,
             int cash_id, java.util.Date deal_time, int pay_money){
         this.purchase_id = purchase_id;
-        this.chapter_id = chapter_id;
         this.user_id = user_id;
-        this.book_id = book_id;
+        this.catalog_id = catalog_id;
         this.cash_id = cash_id;
         this.deal_time = deal_time;
         this.pay_money = pay_money;
@@ -27,23 +25,17 @@ public class PurchaseList {
     public void setPurchase_id(long purchase_id){
        this.purchase_id = purchase_id;
     }
-    public int getChapter_id(){
-        return chapter_id;
-    }
-    public void setChapter_id(int chapter_id){
-       this.chapter_id = chapter_id;
-    }
     public long getUser_id(){
         return user_id;
     }
     public void setUser_id(long user_id){
        this.user_id = user_id;
     }
-    public long getBook_id(){
-        return book_id;
+    public long getCatalog_id(){
+        return catalog_id;
     }
-    public void setBook_id(long book_id){
-       this.book_id = book_id;
+    public void setCatalog_id(long catalog_id){
+       this.catalog_id = catalog_id;
     }
     public int getCash_id(){
         return cash_id;
@@ -67,9 +59,8 @@ public class PurchaseList {
     public String toString(){
         return "PurchaseList{"+
         "purchase_id="+purchase_id+
-        ",chapter_id="+chapter_id+
         ",user_id="+user_id+
-        ",book_id="+book_id+
+        ",catalog_id="+catalog_id+
         ",cash_id="+cash_id+
         ",deal_time="+deal_time+
         ",pay_money="+pay_money+"}";

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 /**
  * Created by Myth on 2017/2/7
  * 使用Spring WebSocket是可以同处于 IOC容器内的，调用方法就方便了
- *
+ * 这是websocket的具体实现类，还有一个是注册类。十分清晰的结构
  */
 @Component
 public class SystemWebSocketHandler implements WebSocketHandler {

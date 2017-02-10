@@ -11,6 +11,7 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 
 /**
  * Created by Myth on 2017/2/7 0007
+ * 注册一个websocket的具体服务器，但是真正的实现是另一个类
  */
 @Configuration
 @EnableWebMvc

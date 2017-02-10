@@ -4,17 +4,15 @@ public class ClickList {
     private long click_id;
     private long user_id;
     private String ip_address;
-    private int chapter_id;
-    private long book_id;
+    private long catalog_id;
 
     public ClickList(){}
-    public ClickList(long click_id, long user_id, String ip_address, int chapter_id, 
-            long book_id){
+    public ClickList(long click_id, long user_id, String ip_address,
+            long catalog_id){
         this.click_id = click_id;
         this.user_id = user_id;
         this.ip_address = ip_address;
-        this.chapter_id = chapter_id;
-        this.book_id = book_id;
+        this.catalog_id = catalog_id;
     }
 
     public long getClick_id(){
@@ -35,17 +33,11 @@ public class ClickList {
     public void setIp_address(String ip_address){
        this.ip_address = ip_address;
     }
-    public int getChapter_id(){
-        return chapter_id;
+    public long getCatalog_id(){
+        return catalog_id;
     }
-    public void setChapter_id(int chapter_id){
-       this.chapter_id = chapter_id;
-    }
-    public long getBook_id(){
-        return book_id;
-    }
-    public void setBook_id(long book_id){
-       this.book_id = book_id;
+    public void setCatalog_id(long catalog_id){
+       this.catalog_id = catalog_id;
     }
     @Override
     public String toString(){
@@ -53,7 +45,6 @@ public class ClickList {
         "click_id="+click_id+
         ",user_id="+user_id+
         ",ip_address="+ip_address+
-        ",chapter_id="+chapter_id+
-        ",book_id="+book_id+"}";
+        ",catalog_id="+catalog_id+"}";
     }
 }

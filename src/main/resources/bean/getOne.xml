@@ -9,6 +9,37 @@
         select * from author
     </select>
 
+    <!--
+        书的相关查询
+    -->
+    <select id="getOne_Book" parameterType="long" resultType="Book">
+        select * from book where book_id=#{book_id}
+    </select>
+    <select id="getAll_Book" resultType="Book">
+        select * from book
+    </select>
+
+    <select id="getOne_BookAppraise" parameterType="long" resultType="BookAppraise">
+        select * from book_appraise where appraise_id=#{appraise_id}
+    </select>
+    <select id="getAll_BookAppraise" resultType="BookAppraise">
+        select * from book_appraise
+    </select>
+
+    <select id="getOne_BookAppraiseAdmire" parameterType="long" resultType="BookAppraiseAdmire">
+        select * from book_appraise_admire where app_ad_id=#{app_ad_id}
+    </select>
+    <select id="getAll_BookAppraiseAdmire" resultType="BookAppraiseAdmire">
+        select * from book_appraise_admire
+    </select>
+
+    <select id="getOne_BookCatalog" parameterType="long" resultType="BookCatalog">
+        select * from book_catalog where catalog_id=#{catalog_id}
+    </select>
+    <select id="getAll_BookCatalog" resultType="BookCatalog">
+        select * from book_catalog
+    </select>
+
     <select id="getOne_BookType" parameterType="long" resultType="BookType">
         select * from book_type where book_type=#{book_type}
     </select>
@@ -16,11 +47,35 @@
         select * from book_type
     </select>
 
-    <select id="getOne_Book" parameterType="long" resultType="Book">
-        select * from book where book_id=#{book_id}
+    <!--
+        书架要特别的重写这个方法
+    -->
+    <select id="getOne_BookshelfNow" parameterType="map" resultType="BookshelfNow">
+        select * from bookshelf_now where user_id=#{user_id} and book_id=#{book_id}
     </select>
-    <select id="getAll_Book" resultType="Book">
-        select * from book
+    <select id="getAll_BookshelfNow" resultType="BookshelfNow">
+        select * from bookshelf_now
+    </select>
+
+    <select id="getOne_BookshelfOld" parameterType="map" resultType="BookshelfOld">
+        select * from bookshelf_old where user_id=#{user_id} and book_id=#{book_id}
+    </select>
+    <select id="getAll_BookshelfOld" resultType="BookshelfOld">
+        select * from bookshelf_old
+    </select>
+    
+    <select id="getOne_CashCoupon" parameterType="long" resultType="CashCoupon">
+        select * from cash_coupon where cash_id=#{cash_id}
+    </select>
+    <select id="getAll_CashCoupon" resultType="CashCoupon">
+        select * from cash_coupon
+    </select>
+
+    <select id="getOne_ClickList" parameterType="long" resultType="ClickList">
+        select * from click_list where click_id=#{click_id}
+    </select>
+    <select id="getAll_ClickList" resultType="ClickList">
+        select * from click_list
     </select>
 
     <select id="getOne_FatherType" resultType="FatherType">

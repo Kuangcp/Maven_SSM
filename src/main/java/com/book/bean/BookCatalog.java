@@ -1,6 +1,7 @@
 package com.book.bean;
 
 public class BookCatalog {
+    private long catalog_id;
     private int chapter_id;
     private long book_id;
     private String chapter_name;
@@ -9,8 +10,9 @@ public class BookCatalog {
     private int chapter_character;
 
     public BookCatalog(){}
-    public BookCatalog(int chapter_id, long book_id, String chapter_name, String content, 
+    public BookCatalog(long catalog_id,int chapter_id, long book_id, String chapter_name, String content,
             java.util.Date up_time, int chapter_character){
+        this.catalog_id = catalog_id;
         this.chapter_id = chapter_id;
         this.book_id = book_id;
         this.chapter_name = chapter_name;
@@ -55,6 +57,15 @@ public class BookCatalog {
     public void setChapter_character(int chapter_character){
        this.chapter_character = chapter_character;
     }
+
+    public long getCatalog_id() {
+        return catalog_id;
+    }
+
+    public void setCatalog_id(long catalog_id) {
+        this.catalog_id = catalog_id;
+    }
+
     @Override
     public String toString(){
         return "BookCatalog{"+
@@ -63,6 +74,7 @@ public class BookCatalog {
         ",chapter_name="+chapter_name+
         ",content="+content+
         ",up_time="+up_time+
+        ",catalog="+catalog_id+
         ",chapter_character="+chapter_character+"}";
     }
 }

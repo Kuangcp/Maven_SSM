@@ -139,3 +139,5 @@ function setMessageInnerHTML(innerHTML) {
 
 }
 //记录对方id的机制要改，加载消息要限制最近30条，其他的在历史记录里分页查看
+// 新消息提示，更改阅读状态
+//其他模块的编写
