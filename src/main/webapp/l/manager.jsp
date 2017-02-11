@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>后台管理中心</title>
-    <link rel="icon" href="../image/ico/book.ico">
+    <link rel="icon" href="../image/ico/books.ico">
     <link href="../js/css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/dashboard.css" rel="stylesheet">
     <link href="../css/author.css" rel="stylesheet">
@@ -74,12 +74,12 @@
     </div>
 </div>
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../js/jquery-slim.min.js"></script>
-<script src="../js/jquery-3.0.0.min.js"></script>
-<script src="../js/tether.min.js"></script>
-<script src="../js/bootstrap.min.js"></script>
+<script src="../js/in/jquery-slim.min.js"></script>
+<script src="../js/in/jquery-3.0.0.min.js"></script>
+<script src="../js/in/tether.min.js"></script>
+<script src="../js/in/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="../js/ie10-viewport-bug-workaround.js"></script>
+<script src="../js/in/ie10-viewport-bug-workaround.js"></script>
 <script src="../js/me/author.js"></script>
 <script>
     $(function(){

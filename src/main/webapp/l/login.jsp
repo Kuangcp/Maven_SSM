@@ -9,12 +9,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../image/ico/book.ico">
+    <link rel="icon" href="../image/ico/books.ico">
 
     <title>Signin To Author</title>
     <link href="<%=Path%>/js/css/bootstrap.min.css" rel="stylesheet">
     <link href="<%=Path%>/css/signup.css" rel="stylesheet">
-    <script src="<%=Path%>/js/jquery-3.0.0.min.js"></script>
+    <script src="<%=Path%>/js/in/jquery-3.0.0.min.js"></script>
     <script>
         //原生js的ajax实现，jquery的不兼容也是日了狗了
         var ajax = {
@@ -95,7 +95,7 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="../js/ie10-viewport-bug-workaround.js"></script>
+<script src="../js/in/ie10-viewport-bug-workaround.js"></script>
 </body>
 </html>
 

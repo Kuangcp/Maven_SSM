@@ -30,12 +30,12 @@
 <html>
 <head>
     <title>作家管理中心</title>
-    <link rel="icon" href="<%=Path%>/image/ico/book.ico">
+    <link rel="icon" href="<%=Path%>/image/ico/books.ico">
     <link href="<%=Path%>/js/css/bootstrap.min.css" rel="stylesheet">
     <link href="<%=Path%>/css/dashboard.css" rel="stylesheet">
     <link href="<%=Path%>/css/grid.css" rel="stylesheet">
     <link href="<%=Path%>/css/author.css" rel="stylesheet">
-    <script src="<%=Path%>/js/jquery-3.0.0.min.js"></script>
+    <script src="<%=Path%>/js/in/jquery-3.0.0.min.js"></script>
 
     <script>
         $(function(){
@@ -285,12 +285,12 @@
     </div>
 </div>
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="<%=Path%>/js/jquery-slim.min.js"></script>
-<script src="<%=Path%>/js/tether.min.js"></script>
-<script src="<%=Path%>/js/bootstrap.min.js"></script>
+<script src="<%=Path%>/js/in/jquery-slim.min.js"></script>
+<script src="<%=Path%>/js/in/tether.min.js"></script>
+<script src="<%=Path%>/js/in/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="<%=Path%>/js/ie10-viewport-bug-workaround.js"></script>
-<script src="<%=Path%>/js/sockjs-0.3.min.js"></script>
+<script src="<%=Path%>/js/in/ie10-viewport-bug-workaround.js"></script>
+<script src="<%=Path%>/js/in/sockjs-0.3.min.js"></script>
 <script src="<%=Path%>/js/me/author.js"></script>
 
 </body>

@@ -8,12 +8,9 @@
     ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
     BookService bookService = (BookService)context.getBean("bookService");
     List list = bookService.getAllTypes();
-
-//    System.out.println(Path);
     Users u = null;
     long user_id=0;
     u = (Users)session.getAttribute("user");
-
     if(u!=null){
         user_id = u.getUser_id();
     }
@@ -21,15 +18,23 @@
 <html>
 <head>
     <title>Myth Book</title>
-    <link rel="icon" href="<%=Path%>/image/ico/book.ico">
+    <link rel="icon" href="<%=Path%>/image/ico/books.ico">
     <link href="<%=Path%>/js/css/bootstrap.min.css" rel="stylesheet">
     <link href="<%=Path%>/css/home.css" rel="stylesheet">
     <link href="<%=Path%>/css/offcanvas.css" rel="stylesheet">
 
-    <script src="<%=Path%>/js/jquery-3.0.0.min.js"></script>
+    <script src="<%=Path%>/js/in/jquery-3.0.0.min.js"></script>
     <script src="<%=Path%>/js/me/home.js"></script>
 <script>
-    //原生js的ajax实现，jquery的不兼容也是日了狗了
+    $(function(){
+        for(var i=1;i<=5;i++){
+            $('#image_'+i).css('display','none');
+        }
+        //图片轮播的初始化
+        $('#book_1').css({'display':'block','background-color':'#0E88EB','color':'white'});
+        $('#image_1').css('display','block');
+    });
+    //原生js的ajax实现，jquery的不兼容
     var ajax = {
         get:function(url,fn){
             var obj = new XMLHttpRequest();
@@ -70,23 +75,12 @@
         })
         //console.log(email + ":" + pass);
     }
-    //获取验证码
+    //ajax 获取验证码
     function turnCode(){
         ajax.get("<%=Path%>/user/getCode",function(data){
             $('#ShowCode').html("<span>"+data+"</span>");
         });
     }
-    $(function(){
-        /*$.ajax("../user/login",function (data) {
-            console.log(data);
-        })*/
-        for(var i=1;i<=5;i++){
-            $('#image_'+i).css('display','none');
-        }
-        $('#book_1').css({'display':'block','background-color':'#0E88EB','color':'white'});
-        $('#image_1').css('display','block');
-    });
-
 </script>
 </head>
 <body>
@@ -155,51 +149,36 @@
     </div>
 </nav>
 
-
 <!--中间布局-->
 <div class="container">
     <div class="row row-offcanvas row-offcanvas-right">
+
         <div class="col-12 col-md-9">
             <p class="float-right hidden-md-up">
                 <!--隐藏按钮-->
                 <button type="button" class="btn btn-primary btn-sm" data-toggle="offcanvas">Toggle nav</button>
             </p>
-
             <!--轮播区域-->
             <div class="image_show">
-            <div>
-            <ul id="imageList">
-                <!--图片数据也是动态的 就是一部小说的宣传海报，或者是活动的海报，URL-->
-                <%
-                    for(int i=1;i<=5;i++){
-                %>
-                <li id="image_<%=i%>"><a><img src="<%=Path%>/image/home/<%=i%>.jpg" width="820px" height="345px" ></a></li>
-                <%
-                    }
-                %>
-                <%--<li id="image_1"><a><img src="../image/home/1.jpg" width="820px" height="345px" ></a></li>
-                <li id="image_2"><a><img src="../image/home/2.jpg" width="820px" height="345px" ></a></li>
-                <li id="image_3"><a><img src="../image/home/3.png" width="820px" height="345px" ></a></li>
-                <li id="image_4"><a><img src="../image/home/4.jpg" width="820px" height="345px" ></a></li>
-                <li id="image_5"><a><img src="../image/home/5.jpg" width="820px" height="345px" ></a></li>--%>
-            </ul>
+                <div>
+                <ul id="imageList">
+                    <!--图片数据也是动态的 就是一部小说的宣传海报，或者是活动的海报，URL-->
+                    <%for(int i=1;i<=5;i++){%>
+                        <li id="image_<%=i%>"><a><img src="<%=Path%>/image/home/<%=i%>.jpg" width="820px" height="345px" ></a></li>
+                    <%}%>
+                </ul>
+                </div>
             </div>
-            </div>
+            <%--图片对应的书籍--%>
             <div class="image_show_book">
-
                 <ul>
                     <li style="width: 90px;color:#0E88EB;">编辑推荐:</li>
-                    <%
-                        for(int i=1;i<=5;i++){
-                    %>
+                    <%for(int i=1;i<=5;i++){%>
                         <li id="book_<%=i%>" onclick="toShow('<%=i%>')">22</li>
                     <%}%>
                     <li style="width: 30px;color:#0E88EB;"><a href="">>></a></li>
                 </ul>
-            </div>
-            <br/>
-            <br/>
-
+            </div><br/><br/>
             <!--排行榜区域-->
             <div class="row ">
                 <div class="col-5 col-lg-3 ">
@@ -226,7 +205,7 @@
         </div>
 
         <!--
-          类别区域
+          书籍类别区域
           使用数据库动态生成 如果为了不频繁查询数据库使用缓存机制（因为这个数据的改动较少）
         -->
         <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar" >
@@ -234,33 +213,31 @@
                 FatherType fa = (FatherType)list.get(i);
                 List types = fa.getBookTypes();
             %>
-            <div class="card type_title" >
-                <div class="card-header" role="tab" id="heading<%=i%>">
-                    <h5 class="mb-0">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%=i%>"
-                           aria-expanded="true" aria-controls="collapse<%=i%>">
-                            <%=fa.getType_name()%>
-                        </a>
-                    </h5>
-                </div>
-                <div id="collapse<%=i%>" class="collapse" role="tabpanel" aria-labelledby="heading<%=i%>">
-                    <div class="card-block type_box">
-                        <%for (int j=0;j<types.size();++j){BookType type = (BookType)types.get(j);%>
-                            <a href=""><button type="button" class="btn btn-primary"><%=type.getType_name()%></button></a>
-                        <%}%>
+                <div class="card type_title" >
+                    <div class="card-header" role="tab" id="heading<%=i%>">
+                        <h5 class="mb-0">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%=i%>"
+                               aria-expanded="true" aria-controls="collapse<%=i%>">
+                                <%=fa.getType_name()%>
+                            </a>
+                        </h5>
+                    </div>
+                    <div id="collapse<%=i%>" class="collapse" role="tabpanel" aria-labelledby="heading<%=i%>">
+                        <div class="card-block type_box">
+                            <%for (int j=0;j<types.size();++j){BookType type = (BookType)types.get(j);%>
+                                <a href=""><button type="button" class="btn btn-primary"><%=type.getType_name()%></button></a>
+                            <%}%>
+                        </div>
                     </div>
                 </div>
-            </div>
             <%}%>
         </div>
     </div>
     <hr><!--分割线-->
-
     <footer>
         <p>&copy; Myth 2017</p>
     </footer>
-
-</div><!--/.container-->
+</div>
 <%--登录窗口--%>
 <div class="modal fade login_box" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
     <div class="modal-dialog" role="document">
@@ -301,12 +278,11 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="<%=Path%>/js/jquery-slim.min.js"></script>
-<script src="<%=Path%>/js/tether.min.js"></script>
-<script src="<%=Path%>/js/bootstrap.min.js"></script>
+<script src="<%=Path%>/js/in/jquery-slim.min.js"></script>
+<script src="<%=Path%>/js/in/tether.min.js"></script>
+<script src="<%=Path%>/js/in/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="<%=Path%>/js/ie10-viewport-bug-workaround.js"></script>
-<script src="<%=Path%>/js/offcanvas.js"></script>
-
+<script src="<%=Path%>/js/in/ie10-viewport-bug-workaround.js"></script>
+<script src="<%=Path%>/js/in/offcanvas.js"></script>
 </body>
 </html>

@@ -18,7 +18,7 @@ function Noshow(){
 }
 
 function item_tran(item){
-    console.log(item);
+    //console.log("条目 : "+item);
     Noshow();
     $('#main_'+item).css({'display':'block'});
     if(item!='0')$('#item_'+item).attr('class','nav-link active');
@@ -141,3 +141,4 @@ function setMessageInnerHTML(innerHTML) {
 //记录对方id的机制要改，加载消息要限制最近30条，其他的在历史记录里分页查看
 // 新消息提示，更改阅读状态
 //其他模块的编写
+//Toolkit 的仓库转移，改成maven项目，便于发布和处理JAR的关系，发布到maven中央仓库去

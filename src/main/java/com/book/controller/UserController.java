@@ -112,6 +112,7 @@ public class UserController {
         String inputCode = request.getParameter("code").toUpperCase();
         Log.info("用户输入验证码:"+inputCode);
 
+        //验证验证码的逻辑，注释就验证码失效
 //        if (inputCode != null && inputCode.equals(code)) {
             long id = userService.Login(email, pass);
             Log.info("查询到的id"+id);
