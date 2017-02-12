@@ -51,8 +51,8 @@
     </insert>
 
     <insert id="insert_ClickList" parameterType="ClickList">
-        insert into click_list (user_id, ip_address, catalog_id)
-          values(#{user_id},#{ip_address},#{catalog_id})
+        insert into click_list (user_id, ip_address, catalog_id,book_id)
+          values(#{user_id},#{ip_address},#{catalog_id},#{book_id})
     </insert>
 
     <insert id="insert_Discuss" parameterType="Discuss">

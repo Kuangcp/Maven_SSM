@@ -5,6 +5,7 @@ public class ClickList {
     private long user_id;
     private String ip_address;
     private long catalog_id;
+    private long book_id;
 
     public ClickList(){}
     public ClickList(long click_id, long user_id, String ip_address,
@@ -39,12 +40,22 @@ public class ClickList {
     public void setCatalog_id(long catalog_id){
        this.catalog_id = catalog_id;
     }
+
+    public long getBook_id() {
+        return book_id;
+    }
+
+    public void setBook_id(long book_id) {
+        this.book_id = book_id;
+    }
+
     @Override
     public String toString(){
         return "ClickList{"+
         "click_id="+click_id+
         ",user_id="+user_id+
         ",ip_address="+ip_address+
+        ",book_id="+book_id+
         ",catalog_id="+catalog_id+"}";
     }
 }

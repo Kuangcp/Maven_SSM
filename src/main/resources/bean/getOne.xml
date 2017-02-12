@@ -84,10 +84,10 @@
     <select id="getAll_FatherType" resultType="FatherType">
         select * from father_type;
     </select>
-    <select id="getOne_Messages" parameterType="Messages">
+    <select id="getOne_Messages" parameterType="long" resultType="Messages">
         select * from messages where message_id=#{message_id}
     </select>
-    <select id="getAll_Messages" parameterType="Messages">
+    <select id="getAll_Messages" resultType="Messages">
         select * from messages
     </select>
 

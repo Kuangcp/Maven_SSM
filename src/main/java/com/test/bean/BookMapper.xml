@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.test.bean.BookMapper" >
+  <resultMap id="BaseResultMap" type="com.test.bean.Book" >
+    <constructor >
+      <idArg column="book_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="book_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="author_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="cover" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="introduce" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="book_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="create_time" jdbcType="DATE" javaType="java.util.Date" />
+      <arg column="all_varcharacter" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="book_status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="write_status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="click_num" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="read_num" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="income_num" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="income" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="score" jdbcType="REAL" javaType="java.lang.Float" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    book_id, book_name, author_id, cover, introduce, book_type, create_time, all_varcharacter, 
+    book_status, write_status, click_num, read_num, income_num, income, score
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.test.bean.BookExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from book
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from book
+    where book_id = #{bookId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from book
+    where book_id = #{bookId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.test.bean.BookExample" >
+    delete from book
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.test.bean.Book" >
+    insert into book (book_id, book_name, author_id, 
+      cover, introduce, book_type, 
+      create_time, all_varcharacter, book_status, 
+      write_status, click_num, read_num, 
+      income_num, income, score
+      )
+    values (#{bookId,jdbcType=BIGINT}, #{bookName,jdbcType=VARCHAR}, #{authorId,jdbcType=BIGINT}, 
+      #{cover,jdbcType=VARCHAR}, #{introduce,jdbcType=VARCHAR}, #{bookType,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=DATE}, #{allVarcharacter,jdbcType=BIGINT}, #{bookStatus,jdbcType=INTEGER}, 
+      #{writeStatus,jdbcType=INTEGER}, #{clickNum,jdbcType=BIGINT}, #{readNum,jdbcType=BIGINT}, 
+      #{incomeNum,jdbcType=BIGINT}, #{income,jdbcType=BIGINT}, #{score,jdbcType=REAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.test.bean.Book" >
+    insert into book
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bookId != null" >
+        book_id,
+      </if>
+      <if test="bookName != null" >
+        book_name,
+      </if>
+      <if test="authorId != null" >
+        author_id,
+      </if>
+      <if test="cover != null" >
+        cover,
+      </if>
+      <if test="introduce != null" >
+        introduce,
+      </if>
+      <if test="bookType != null" >
+        book_type,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="allVarcharacter != null" >
+        all_varcharacter,
+      </if>
+      <if test="bookStatus != null" >
+        book_status,
+      </if>
+      <if test="writeStatus != null" >
+        write_status,
+      </if>
+      <if test="clickNum != null" >
+        click_num,
+      </if>
+      <if test="readNum != null" >
+        read_num,
+      </if>
+      <if test="incomeNum != null" >
+        income_num,
+      </if>
+      <if test="income != null" >
+        income,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bookId != null" >
+        #{bookId,jdbcType=BIGINT},
+      </if>
+      <if test="bookName != null" >
+        #{bookName,jdbcType=VARCHAR},
+      </if>
+      <if test="authorId != null" >
+        #{authorId,jdbcType=BIGINT},
+      </if>
+      <if test="cover != null" >
+        #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null" >
+        #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="bookType != null" >
+        #{bookType,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="allVarcharacter != null" >
+        #{allVarcharacter,jdbcType=BIGINT},
+      </if>
+      <if test="bookStatus != null" >
+        #{bookStatus,jdbcType=INTEGER},
+      </if>
+      <if test="writeStatus != null" >
+        #{writeStatus,jdbcType=INTEGER},
+      </if>
+      <if test="clickNum != null" >
+        #{clickNum,jdbcType=BIGINT},
+      </if>
+      <if test="readNum != null" >
+        #{readNum,jdbcType=BIGINT},
+      </if>
+      <if test="incomeNum != null" >
+        #{incomeNum,jdbcType=BIGINT},
+      </if>
+      <if test="income != null" >
+        #{income,jdbcType=BIGINT},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.test.bean.BookExample" resultType="java.lang.Integer" >
+    select count(*) from book
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update book
+    <set >
+      <if test="record.bookId != null" >
+        book_id = #{record.bookId,jdbcType=BIGINT},
+      </if>
+      <if test="record.bookName != null" >
+        book_name = #{record.bookName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authorId != null" >
+        author_id = #{record.authorId,jdbcType=BIGINT},
+      </if>
+      <if test="record.cover != null" >
+        cover = #{record.cover,jdbcType=VARCHAR},
+      </if>
+      <if test="record.introduce != null" >
+        introduce = #{record.introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bookType != null" >
+        book_type = #{record.bookType,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=DATE},
+      </if>
+      <if test="record.allVarcharacter != null" >
+        all_varcharacter = #{record.allVarcharacter,jdbcType=BIGINT},
+      </if>
+      <if test="record.bookStatus != null" >
+        book_status = #{record.bookStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.writeStatus != null" >
+        write_status = #{record.writeStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.clickNum != null" >
+        click_num = #{record.clickNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.readNum != null" >
+        read_num = #{record.readNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.incomeNum != null" >
+        income_num = #{record.incomeNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.income != null" >
+        income = #{record.income,jdbcType=BIGINT},
+      </if>
+      <if test="record.score != null" >
+        score = #{record.score,jdbcType=REAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update book
+    set book_id = #{record.bookId,jdbcType=BIGINT},
+      book_name = #{record.bookName,jdbcType=VARCHAR},
+      author_id = #{record.authorId,jdbcType=BIGINT},
+      cover = #{record.cover,jdbcType=VARCHAR},
+      introduce = #{record.introduce,jdbcType=VARCHAR},
+      book_type = #{record.bookType,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=DATE},
+      all_varcharacter = #{record.allVarcharacter,jdbcType=BIGINT},
+      book_status = #{record.bookStatus,jdbcType=INTEGER},
+      write_status = #{record.writeStatus,jdbcType=INTEGER},
+      click_num = #{record.clickNum,jdbcType=BIGINT},
+      read_num = #{record.readNum,jdbcType=BIGINT},
+      income_num = #{record.incomeNum,jdbcType=BIGINT},
+      income = #{record.income,jdbcType=BIGINT},
+      score = #{record.score,jdbcType=REAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.test.bean.Book" >
+    update book
+    <set >
+      <if test="bookName != null" >
+        book_name = #{bookName,jdbcType=VARCHAR},
+      </if>
+      <if test="authorId != null" >
+        author_id = #{authorId,jdbcType=BIGINT},
+      </if>
+      <if test="cover != null" >
+        cover = #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null" >
+        introduce = #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="bookType != null" >
+        book_type = #{bookType,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="allVarcharacter != null" >
+        all_varcharacter = #{allVarcharacter,jdbcType=BIGINT},
+      </if>
+      <if test="bookStatus != null" >
+        book_status = #{bookStatus,jdbcType=INTEGER},
+      </if>
+      <if test="writeStatus != null" >
+        write_status = #{writeStatus,jdbcType=INTEGER},
+      </if>
+      <if test="clickNum != null" >
+        click_num = #{clickNum,jdbcType=BIGINT},
+      </if>
+      <if test="readNum != null" >
+        read_num = #{readNum,jdbcType=BIGINT},
+      </if>
+      <if test="incomeNum != null" >
+        income_num = #{incomeNum,jdbcType=BIGINT},
+      </if>
+      <if test="income != null" >
+        income = #{income,jdbcType=BIGINT},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=REAL},
+      </if>
+    </set>
+    where book_id = #{bookId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.test.bean.Book" >
+    update book
+    set book_name = #{bookName,jdbcType=VARCHAR},
+      author_id = #{authorId,jdbcType=BIGINT},
+      cover = #{cover,jdbcType=VARCHAR},
+      introduce = #{introduce,jdbcType=VARCHAR},
+      book_type = #{bookType,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=DATE},
+      all_varcharacter = #{allVarcharacter,jdbcType=BIGINT},
+      book_status = #{bookStatus,jdbcType=INTEGER},
+      write_status = #{writeStatus,jdbcType=INTEGER},
+      click_num = #{clickNum,jdbcType=BIGINT},
+      read_num = #{readNum,jdbcType=BIGINT},
+      income_num = #{incomeNum,jdbcType=BIGINT},
+      income = #{income,jdbcType=BIGINT},
+      score = #{score,jdbcType=REAL}
+    where book_id = #{bookId,jdbcType=BIGINT}
+  </update>
+</mapper>

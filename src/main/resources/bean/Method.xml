@@ -6,5 +6,13 @@
         select login(#{email},#{password})
     </select>
 
+    <select id="NoReadNums" parameterType="Long" resultType="int">
+        select count(*) from messages where receive=#{receive} and readed=0
+    </select>
+
+    <select id="NoReadNum" parameterType="map" resultType="int">
+        select count(*) from messages where receive=#{receive} and send=#{send} and readed=0
+    </select>
+
 
 </mapper>

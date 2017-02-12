@@ -37,12 +37,14 @@ public class TestJson {
     }
     @Test
     public void testInt(){
-        int a = 10;
+        Integer a = 10;
+
         add(a);
         Log.info("a = "+a);
     }
-    public int add (int a ){
-//        a = new Integer(a*10);
+    public int add (Integer a ){
+        //a = new Integer(a*10);
+        a*=10;
         return a*10;
     }
     @Test

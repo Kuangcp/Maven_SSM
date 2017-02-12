@@ -85,6 +85,25 @@ public class MessageService {
         return result;
     }
 
+    /**
+     * 获取未读消息的总数
+     * @param id
+     * @return
+     */
+    public int getNoReadMessage(long id){
+        return messageDao.getNoReadNums(id);
+    }
+
+    /**
+     * 获取单个未读消息个数
+     * @param receive
+     * @param send
+     * @return
+     */
+    public int getNoReadMessageOne(long receive ,long send){
+        return messageDao.getNoReadNum(receive,send);
+    }
+
     //根据输入id得到用户名
     public String getName(long id)throws Exception{
         String temp = id+"";

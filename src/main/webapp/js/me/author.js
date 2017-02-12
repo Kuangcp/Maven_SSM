@@ -142,3 +142,4 @@ function setMessageInnerHTML(innerHTML) {
 // 新消息提示，更改阅读状态
 //其他模块的编写
 //Toolkit 的仓库转移，改成maven项目，便于发布和处理JAR的关系，发布到maven中央仓库去
+//多阅读别人的代码，查看别人的思路，借鉴，升华

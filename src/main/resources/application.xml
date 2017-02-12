@@ -12,7 +12,7 @@
          http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
 
     <!-- 告诉spring容器加载那些bao下的可能出现的spring注解 -->
-    <context:component-scan base-package="com.book.service com.book.dao com.book.util" />
+    <context:component-scan base-package="com.book.service com.book.dao" />
     <!-- context:include-filter表示要求spring容器将包下@Aspect注解也生效 -->
     <!--<context:component-scan base-package="com.book.service">
         <context:include-filter type="annotation" expression="org.aspectj.lang.annotation.Aspect"/>

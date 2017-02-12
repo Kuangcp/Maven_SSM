@@ -4,6 +4,7 @@ public class PurchaseList {
     private long purchase_id;
     private long user_id;
     private long catalog_id;
+    private long book_id;
     private int cash_id;
     private java.util.Date deal_time;
     private int pay_money;
@@ -55,12 +56,22 @@ public class PurchaseList {
     public void setPay_money(int pay_money){
        this.pay_money = pay_money;
     }
+
+    public long getBook_id() {
+        return book_id;
+    }
+
+    public void setBook_id(long book_id) {
+        this.book_id = book_id;
+    }
+
     @Override
     public String toString(){
         return "PurchaseList{"+
         "purchase_id="+purchase_id+
         ",user_id="+user_id+
         ",catalog_id="+catalog_id+
+        ",book_id="+book_id+
         ",cash_id="+cash_id+
         ",deal_time="+deal_time+
         ",pay_money="+pay_money+"}";
