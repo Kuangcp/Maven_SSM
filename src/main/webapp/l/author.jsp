@@ -2,12 +2,15 @@
 <%@ page import="com.book.service.MessageService" %>
 <%@ page import="org.springframework.context.ApplicationContext" %>
 <%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
+<%@ page import="redis.clients.jedis.Jedis" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf8"%>
 <%
     String Path = request.getContextPath();
     ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
     MessageService messageService = (MessageService)context.getBean("messageService");
-
+    RedisUtil redisUtil = (RedisUtil)context.getBean("redisUtil");
+    Jedis cache = redisUtil.getJedis();
+    System.out.println(cache.get("u"));
     Map<String,List<Messages>> messagesList= null;
     Set<String> SendNames = null;//发送者姓名
     String sexName="";
@@ -36,6 +39,12 @@
     <link href="<%=Path%>/css/grid.css" rel="stylesheet">
     <link href="<%=Path%>/css/author.css" rel="stylesheet">
     <script src="<%=Path%>/js/in/jquery-3.0.0.min.js"></script>
+
+    <style type="text/css">
+        body{
+            /*background-color: #f9f9f9;*/
+        }
+    </style>
 
     <script>
         $(function(){
@@ -217,43 +226,53 @@
 
         <main class="col-sm-9 offset-sm-3 col-md-11 offset-md-2 pt-3" id="main_1" style="margin-left: 140px;">
             <h1>11</h1>
+            <div style="background-color: #E5E2EB;width:1100px;height:550px;">
+            </div>
 
         </main>
 
         <main class="col-sm-9 offset-sm-3 col-md-11 offset-md-2 pt-3" id="main_2" style="margin-left: 140px;">
             <h1>222</h1>
+            <div style="background-color: #E5E2EB;width:1100px;height:550px;">
+            </div>
 
         </main>
         <main class="col-sm-9 offset-sm-3 col-md-11 offset-md-2 pt-3" id="main_3" style="margin-left: 140px;">
             <h1>333</h1>
+            <div style="background-color: #E5E2EB;width:1100px;height:550px;">
+            </div>
 
         </main>
         <main class="col-sm-9 offset-sm-3 col-md-11 offset-md-2 pt-3" id="main_4" style="margin-left: 140px;">
             <h1>444</h1>
+            <div style="background-color: #E5E2EB;width:1100px;height:550px;">
+            </div>
 
         </main>
 
         <main class="col-sm-9 offset-sm-3 col-md-11 offset-md-2 pt-3" id="main_5" style="margin-left: 140px;">
             <h1>55</h1>
+            <div style="background-color: #E5E2EB;width:1100px;height:550px;">
+            </div>
 
         </main>
-        <main class="col-sm-9 offset-sm-3 col-md-11 offset-md-2 pt-3" id="main_6" style="margin-left: 140px;">
+        <main class="col-sm-9 offset-sm-3 col-md-11  " id="main_6" style="margin-left: 140px;width:1160px;">
             <button type="button" class="btn btn-primary" onclick="back()">返回</button>
 
             <button type="button" class="btn btn-primary" style="" onclick="new_Message()">+</button>
-            <span style="margin-left:300px;font: 20px bold;color: blue;" id="message_title">消息查看</span>
+            <span style="margin-left:350px;font: 20px bold;color: blue;" id="message_title">消息查看</span>
 
-            <hr>
-            <div class="container" id="messageBox">
+            <div style="background-color: #E5E2EB;width:1100px;height:550px;">
+            <div class="name_box" id="messageBox">
                 <%for (String Re_name:SendNames){ String name = Re_name.split("#")[0];%>
-                    <div class="row" style="float:left;margin-right: 20px;" onclick="showMessage('<%=name%>')" id="<%=name%>">
-                        <div class="col-12"><%=name%></div>
+                    <div  onclick="showMessage('<%=name%>')" id="<%=name%>">
+                        <div class="btn btn-primary"><%=name%></div>
                     </div>
                 <%}%>
             </div>
 
             <%--查看消息发送消息--%>
-            <div class="invisible " id="SendMessage">
+            <div class="" id="SendMessage">
                 <%for (String Re_name:SendNames){  String name = Re_name.split("#")[0]; List<Messages> list = messagesList.get(Re_name);%>
                     <div id="history_<%=name%>" class="historychat invisible">
                         <%--获取已有消息的发送方就是此次的接收方--%>
@@ -265,10 +284,12 @@
                                 <div class="row_box me_box">
                                 <%=me.getMessage()%>
                                 </div>
+                            <br/><br/>
                             <%}else{%>
-                                <div class="row_box">
+                                <div class="row_box other_box">
                                     <%=me.getMessage()%>
                                 </div>
+                            <br/><br/>
                             <%}%>
                         <%}%>
                     </div>
@@ -278,7 +299,7 @@
                     <input type="text" name="message" id="inputText" style="width: 400px;"/>
                     <button type="button" onclick="send()" class="btn btn-primary">发送</button>
                 </div>
-
+            </div>
             </div>
         </main>
 <%}%>

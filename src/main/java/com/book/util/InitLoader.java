@@ -10,6 +10,7 @@ package com.book.util;
 public class InitLoader {
     /*
     @TODO 完成使用properties文件缓存类别信息，启动jetty时初始化文件
+    使用redis来缓存数据
      */
     public void LoadAllTypes(){
 //        Config config = new Config();

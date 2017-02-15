@@ -8,6 +8,7 @@ function init(){
     // $('#main_2').css({'display':'none'});
     Noshow();
     item_tran('1');
+    $('#sendBox').attr('class','invisible');
     //$('#item_1').attr('class','nav-link active');
 }
 function Noshow(){
@@ -27,8 +28,9 @@ function item_tran(item){
 }
 
 function showMessage(data){
-    $('#messageBox').attr('class','invisible');
-    $('#SendMessage').attr('class','');
+    $('#sendBox').attr('class','inputBox');
+    $('#messageBox').attr('class','name_box');
+    $('#SendMessage').attr('class','send_box');
     $('.historychat').attr('class','historychat invisible')
     $('#history_'+data).attr('class','historychat')
     receiver = data;
@@ -37,7 +39,7 @@ function showMessage(data){
 }
 function back(){
     document.getElementById('message_title').innerText = '消息查看';
-    $('#messageBox').attr('class','container');
+    $('#messageBox').attr('class','name_box');
     $('#SendMessage').attr('class','invisible');
 }
 function new_Message() {
@@ -84,7 +86,7 @@ function send() {
         //清除内容
         $('#inputText').val("");
         ws.send(message);
-        //console.log('发出的json: ' + message);
+        console.log('发出的json: ' + message);
 
         // ws.send(message);
     } else {
@@ -95,6 +97,7 @@ function send() {
 function setMessageInnerHTML(innerHTML) {
     var mess=eval('('+innerHTML+')');
     innerHTML = mess.message;
+    console.log("长度 : "+innerHTML.length);
 
     var message = '  ';
     for(var i=0;i<innerHTML.length;i+=50){

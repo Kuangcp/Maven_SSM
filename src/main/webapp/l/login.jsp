@@ -42,6 +42,9 @@
         }
         //ajax 实现登录
         function login() {
+            $.get('',function(data){
+                console.log(data);
+            });
             var email = $('#inputEmail').val();
             var pass = $('#inputPassword').val();
             var code = $('#inputCode').val();

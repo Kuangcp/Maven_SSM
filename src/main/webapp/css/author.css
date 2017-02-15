@@ -1,3 +1,4 @@
+
 .title_font{
     font-size:25px;
     font-family: 华文新魏;
@@ -9,25 +10,54 @@
 .invisible{
     display: none;
 }
+.name_box{
+
+    width:120px;
+    height:546px;
+    /*background-color: #5cb3fd;*/
+    /*margin-left:10px;*/
+    border-right: 1px solid springgreen;
+    position: absolute;
+    top:68px;
+    left:1px;
+    overflow: auto;
+}
+.send_box{
+
+}
 .row_box{
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
     border-radius: 8px;
+    display: inline-block;
+    padding: 0px 10px;
 
-    margin-bottom: 5px;
-    width:400px;
+    /*width:400px;*/
+
+    /*margin-bottom: -10px;*/
+    /*max-width: 400px;*/
     background-color: rgba(166,218,220,1);
     background-image: -webkit-gradient(linear,0 0,0 30,from(hsla(0,0%,100%,0.6)),to(hsla(0,0%,100%,0)));
     border: 1px solid lightskyblue;
 }
 .me_box{
     /*position: absolute;*/
-    margin-left:800px;
+    /*margin-left:800px;*/
+    /*float: right;*/
+    float: right;
+    margin-right:20px;
+    margin-bottom: 2px;
+
+}
+.other_box {
+    float: left;
+    padding: 0px 10px;
+    margin-bottom: 2px;
 }
 .inputBox{
     position: absolute;
     top:560px;
-    left:40px;
+    left:160px;
     /*background-color: lightgray;*/
 
     /*margin-top:400px;*/
@@ -35,7 +65,9 @@
 }
 
 .historychat{
-    width:1220px;
-    height:425px;
+    margin-left:150px;;
+    width:1000px;
+    height:544px;
     overflow: auto;
 }
+/*author页面没有处理好Session的进程？？？奇怪*/
