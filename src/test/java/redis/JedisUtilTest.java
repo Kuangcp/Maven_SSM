@@ -90,7 +90,7 @@ public class JedisUtilTest {
      */
     @Test
     public void testList() {
-//开始前，先移除所有的内容
+//开始前，先移除所有的内容je
         jedis.del("java framework");
         System.out.println(jedis.lrange("java framework", 0, -1));
 //先向key java framework中存放三条数据

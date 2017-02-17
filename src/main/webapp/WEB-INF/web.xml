@@ -37,9 +37,9 @@
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
-  <listener>
+  <!--<listener>
     <listener-class>com.book.util.SystemInit</listener-class>
-  </listener>
+  </listener>-->
   <!--<listener>
     <listener-class>IntrospctorCleanUpListener</listener-class>
   </listener>-->

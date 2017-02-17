@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:p="http://www.springframework.org/schema/p"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
          http://www.springframework.org/schema/beans/spring-beans.xsd
          http://www.springframework.org/schema/context
-         http://www.springframework.org/schema/context/spring-context-4.0.xsd
+         http://www.springframework.org/schema/context/spring-context-3.0.xsd
          http://www.springframework.org/schema/tx
-         http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+         http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
     <!-- 告诉spring容器加载那些bao下的可能出现的spring注解 -->
-    <context:component-scan base-package="com.book.service com.book.dao com.book.util" />
+    <context:component-scan base-package="com.book.service com.book.dao com.book.redis com.book.util" />
     <!-- context:include-filter表示要求spring容器将包下@Aspect注解也生效 -->
     <!--<context:component-scan base-package="com.book.service">
         <context:include-filter type="annotation" expression="org.aspectj.lang.annotation.Aspect"/>
@@ -37,12 +36,12 @@
     <bean id="mybatisSessionFactory" class="com.book.dao.MybatisSessionFactory">
         <property name="sessionFactory" ref="sqlSessionFactory"/>
     </bean>
-    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+    <!--<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
         <property name="maxIdle" value="300" />
         <property name="maxTotal" value="600" />
         <property name="maxWaitMillis" value="1000" />
         <property name="testOnBorrow" value="true" />
-    </bean>
+    </bean>-->
 
     <!--定义数据源-->
     <tx:annotation-driven transaction-manager="transactionManager" />
@@ -76,6 +75,21 @@
         <property name="connectionFactory"   ref="connectionFactory" />
     </bean>-->
 
+    <!--
+        配置一个Jedis的池，自动注入到工具类中，自己封装，关于Spring的Template以后学习，博大精深
+    -->
+    <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="4096"/>
+        <property name="maxIdle" value="200"/>
+        <property name="maxWaitMillis" value="3000"/>
+        <property name="testOnBorrow" value="true"/>
+        <property name="testOnReturn" value="true"/>
+    </bean>
+    <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+        <constructor-arg index="0" ref="poolConfig"/>
+        <constructor-arg index="1" value="127.0.0.1"/>
+        <!--<constructor-arg index="2" value="6379" type="int"/>-->
+    </bean>
 
 
 </beans>

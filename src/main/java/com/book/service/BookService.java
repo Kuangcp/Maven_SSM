@@ -23,7 +23,7 @@ public class BookService {
         try{
             list = bookTypeDao.getAllTypes();
         }catch (Exception e){
-
+            e.printStackTrace();
         }
         return list;
     }
