@@ -1,9 +1,7 @@
 package redis;
 
-import com.book.bean.BookType;
-import com.book.bean.FatherType;
-import com.book.service.BookService;
 import com.book.redis.RedisUtils;
+import com.book.service.BookService;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.LoggerFactory;
@@ -61,21 +59,21 @@ public class MythRedisTest {
     @Test
     public void TestList(){
 //        载入数据
-        jedis.del("BookFatherType");
-        bookService = (BookService) context.getBean("bookService");
-        List<FatherType> list = bookService.getAllTypes();
-        int FatherSize = list.size();
-        for(int i=FatherSize-1;i>=0;i--){
-            FatherType fatherType = list.get(i);
-            // 放入父类
-            jedis.lpush("BookFatherType",fatherType.getType_name());
-            List<BookType> types = fatherType.getBookTypes();
-            int TypeSize = types.size();
-            jedis.del(fatherType.getType_name());
-            for(int j=TypeSize-1;j>=0;j--){
-                jedis.lpush(fatherType.getType_name(),types.get(j).getType_name());
-            }
-        }
+//        jedis.del("BookFatherType");
+//        bookService = (BookService) context.getBean("bookService");
+//        List<FatherType> list = bookService.getAllTypes();
+//        int FatherSize = list.size();
+//        for(int i=FatherSize-1;i>=0;i--){
+//            FatherType fatherType = list.get(i);
+//            // 放入父类
+//            jedis.lpush("BookFatherType",fatherType.getType_name());
+//            List<BookType> types = fatherType.getBookTypes();
+//            int TypeSize = types.size();
+//            jedis.del(fatherType.getType_name());
+//            for(int j=TypeSize-1;j>=0;j--){
+//                jedis.lpush(fatherType.getType_name(),types.get(j).getType_name());
+//            }
+//        }
 //        获取数据
         List<String> types = jedis.lrange("BookFatherType",0,-1);
         //Log.info(jedis.lrange("BookFatherType",0,-1).toString());

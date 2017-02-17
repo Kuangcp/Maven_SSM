@@ -6,11 +6,11 @@ import com.book.redis.RedisUtils;
 import com.book.service.BookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.stereotype.Component;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -19,22 +19,28 @@ import java.util.List;
 /**
  * Created by Myth on 2017/2/15 0015
  */
-@Component
 public class SystemInit implements ServletContextListener {
 
-    @Autowired
+//    @Autowired
     RedisUtils utils;
-    @Autowired
+//    @Autowired
     BookService bookService;
+    private ApplicationContext context;
 
     private static Logger logger = LoggerFactory.getLogger(SystemInit.class);
 
+
     @Override
-    public void contextInitialized(ServletContextEvent servletContextEvent) {
+    public void contextInitialized(ServletContextEvent event) {
         logger.info("初始化系统");
-        ApplicationContext context = new ClassPathXmlApplicationContext("application.xml");
-        RedisUtils util = (RedisUtils) context.getBean("redisUtils");
-        Jedis jedis = utils.getConnect();
+        context = WebApplicationContextUtils.getWebApplicationContext(event.getServletContext());
+
+//        ApplicationContext context = new ClassPathXmlApplicationContext("application.xml");
+//        RedisUtils utils = (RedisUtils) context.getBean("redisUtils");
+//        Jedis jedis = utils.getConnect();
+        JedisPoolConfig config = (JedisPoolConfig)context.getBean("poolConfig");
+        JedisPool pool = (JedisPool)context.getBean("jedisPool");
+        Jedis jedis  = pool.getResource();
         initTypes(jedis);
 
 //        System.out.println("缓存结果 : "+cache.get("u"));
@@ -43,7 +49,7 @@ public class SystemInit implements ServletContextListener {
 //    初始化类别的方法
     public void initTypes(Jedis jedis){
         jedis.del("BookFatherType");
-//        bookService = (BookService) context.getBean("bookService");
+        bookService = (BookService) context.getBean("bookService");
         List<FatherType> list = bookService.getAllTypes();
         int FatherSize = list.size();
         for(int i=FatherSize-1;i>=0;i--){
