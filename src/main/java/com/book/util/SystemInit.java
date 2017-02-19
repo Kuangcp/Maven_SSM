@@ -47,6 +47,7 @@ public class SystemInit implements ServletContextListener {
     }
 
 //    初始化类别的方法
+// 将类别-父类键值对 和 父类-子类键值对放入
     public void initTypes(Jedis jedis){
         jedis.del("BookFatherType");
         bookService = (BookService) context.getBean("bookService");

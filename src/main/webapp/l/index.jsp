@@ -1,15 +1,27 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" import="com.book.bean.BookType,com.book.bean.FatherType,com.book.bean.Users,com.book.dao.BookTypeDao" pageEncoding="utf8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" import="com.book.bean.BookType,com.book.bean.FatherType,com.book.bean.Users,com.book.redis.RedisUtils" pageEncoding="utf8" %>
 <%@ page import="com.book.service.BookService" %>
 <%@ page import="org.springframework.context.ApplicationContext" %>
 <%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
+<%@ page import="redis.clients.jedis.Jedis" %>
 <%@ page import="java.util.List" %>
 <%
     String Path = request.getContextPath();
     ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
-    BookService bookService = (BookService)context.getBean("bookService");
-    List list = bookService.getAllTypes();
+//    BookService bookService = (BookService)context.getBean("bookService");
+//    List list = bookService.getAllTypes();
     Users u = null;
     long user_id=0;
+    //加载缓存中的数据
+    RedisUtils redisUtil = (RedisUtils)context.getBean("redisUtils");
+    Jedis jedis = redisUtil.getConnect();
+    List<String> types = jedis.lrange("BookFatherType",0,-1);
+    for(int i=0;i<types.size();i++){
+        System.out.println("|"+types.get(i)+"|");
+        List type = jedis.lrange(types.get(i),0,-1);
+        for (int j=0;j<type.size();j++){
+            System.out.println(j+"/"+type.get(j)+"/");
+        }
+    }
     u = (Users)session.getAttribute("user");
     if(u!=null){
         user_id = u.getUser_id();
@@ -209,23 +221,27 @@
           使用数据库动态生成 如果为了不频繁查询数据库使用缓存机制（因为这个数据的改动较少）
         -->
         <div class="col-6 col-md-3 sidebar-offcanvas" id="sidebar" >
-            <%for(int i=0;i<list.size();++i){
+            <%/*for(int i=0;i<list.size();++i){
                 FatherType fa = (FatherType)list.get(i);
-                List types = fa.getBookTypes();
+                List types = fa.getBookTypes();*/
+                for(int i=0;i<types.size();i++){ List type = jedis.lrange(types.get(i),0,-1);
             %>
                 <div class="card type_title" >
                     <div class="card-header" role="tab" id="heading<%=i%>">
                         <h5 class="mb-0">
                             <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%=i%>"
                                aria-expanded="true" aria-controls="collapse<%=i%>">
-                                <%=fa.getType_name()%>
+                                <%--<%=fa.getType_name()%>--%><%=types.get(i)%>
                             </a>
                         </h5>
                     </div>
                     <div id="collapse<%=i%>" class="collapse" role="tabpanel" aria-labelledby="heading<%=i%>">
                         <div class="card-block type_box">
-                            <%for (int j=0;j<types.size();++j){BookType type = (BookType)types.get(j);%>
+                            <%--<%for (int j=0;j<types.size();++j){BookType type = (BookType)types.get(j);%>
                                 <a href=""><button type="button" class="btn btn-primary"><%=type.getType_name()%></button></a>
+                            <%}%>--%>
+                            <%for (int j=0;j<type.size();j++){%>
+                                <a href=""><button type="button" class="btn btn-primary"><%=type.get(j)%></button></a>
                             <%}%>
                         </div>
                     </div>

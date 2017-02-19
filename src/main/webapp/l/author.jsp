@@ -1,16 +1,28 @@
-<%@ page import="com.book.bean.*,com.book.util.*,com.book.dao.*,java.util.*" %>
-<%@ page import="com.book.service.MessageService" %>
+<%@ page import="com.book.bean.Author,com.book.bean.Messages,com.book.redis.RedisUtils,com.book.service.MessageService" %>
 <%@ page import="org.springframework.context.ApplicationContext" %>
 <%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
 <%@ page import="redis.clients.jedis.Jedis" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.Set" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf8"%>
 <%
     String Path = request.getContextPath();
     ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
     MessageService messageService = (MessageService)context.getBean("messageService");
-    RedisUtil redisUtil = (RedisUtil)context.getBean("redisUtil");
-    Jedis cache = redisUtil.getJedis();
-    System.out.println(cache.get("u"));
+    //从缓存中加载数据
+    RedisUtils redisUtil = (RedisUtils)context.getBean("redisUtils");
+    Jedis jedis = redisUtil.getConnect();
+    //System.out.println(jedis.get("BookFatherType"));
+    List<String> types = jedis.lrange("BookFatherType",0,-1);
+    for(int i=0;i<types.size();i++){
+        System.out.println("|"+types.get(i)+"|");
+        List type = jedis.lrange(types.get(i),0,-1);
+        for (int j=0;j<type.size();j++){
+            System.out.println(j+"/"+type.get(j)+"/");
+        }
+    }
+    //获取消息的数据
     Map<String,List<Messages>> messagesList= null;
     Set<String> SendNames = null;//发送者姓名
     String sexName="";

@@ -1,12 +1,15 @@
+/*
 package com.test.redis;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+*/
 /**
  * Created by Myth on 2017/2/16 0016
- */
+ *//*
+
 public class TestRedis {
     @Autowired
     private JedisPool jedisPool;
@@ -36,3 +39,4 @@ public class TestRedis {
         this.jedisPool = jedisPool;
     }
 }
+*/

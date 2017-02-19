@@ -1,3 +1,4 @@
+/*
 package com.book.util;
 
 import org.slf4j.LoggerFactory;
@@ -7,10 +8,13 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
+*/
 /**
  * Created by Myth on 2017/2/15
  * 为了获取和 Redis的连接代理对象，单例的连接池
- */
+ * 获取有错误空指针异常
+ *//*
+
 @Component
 public class RedisUtil {
     private static org.slf4j.Logger Log = LoggerFactory.getLogger(RedisUtil.class);
@@ -19,10 +23,12 @@ public class RedisUtil {
     private JedisPool pool;
     private Jedis jedis;
 
-    /**
+    */
+/**
      * 使用了双重锁确保单例
      * @return
-     */
+     *//*
+
     public JedisPool getPool(){
         if(pool==null){
             synchronized (JedisPool.class){
@@ -50,3 +56,4 @@ public class RedisUtil {
         this.config = config;
     }
 }
+*/
