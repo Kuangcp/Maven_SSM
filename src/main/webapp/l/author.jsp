@@ -14,14 +14,8 @@
     RedisUtils redisUtil = (RedisUtils)context.getBean("redisUtils");
     Jedis jedis = redisUtil.getConnect();
     //System.out.println(jedis.get("BookFatherType"));
-    List<String> types = jedis.lrange("BookFatherType",0,-1);
-    for(int i=0;i<types.size();i++){
-        System.out.println("|"+types.get(i)+"|");
-        List type = jedis.lrange(types.get(i),0,-1);
-        for (int j=0;j<type.size();j++){
-            System.out.println(j+"/"+type.get(j)+"/");
-        }
-    }
+//    List<String> types = jedis.lrange("BookFatherType",0,-1);
+
     //获取消息的数据
     Map<String,List<Messages>> messagesList= null;
     Set<String> SendNames = null;//发送者姓名
@@ -51,7 +45,6 @@
     <link href="<%=Path%>/css/grid.css" rel="stylesheet">
     <link href="<%=Path%>/css/author.css" rel="stylesheet">
     <script src="<%=Path%>/js/in/jquery-3.0.0.min.js"></script>
-
     <style type="text/css">
         body{
             /*background-color: #f9f9f9;*/

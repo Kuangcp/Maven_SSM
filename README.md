@@ -4,10 +4,12 @@
 - Spring
 - Springmvc
 - mybatis
-- redis 
+- Spring redis 
 - shiro
 - solr
 - websocket
+- Spring data
+- Spring boot
 - npm activiti
 
 ## 思想

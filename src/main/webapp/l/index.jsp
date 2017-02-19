@@ -11,7 +11,7 @@
 //    List list = bookService.getAllTypes();
     Users u = null;
     long user_id=0;
-    //加载缓存中的数据
+    //加载redis缓存中的数据
     RedisUtils redisUtil = (RedisUtils)context.getBean("redisUtils");
     Jedis jedis = redisUtil.getConnect();
     List<String> types = jedis.lrange("BookFatherType",0,-1);
@@ -22,6 +22,7 @@
             System.out.println(j+"/"+type.get(j)+"/");
         }
     }
+    jedis.disconnect();
     u = (Users)session.getAttribute("user");
     if(u!=null){
         user_id = u.getUser_id();

@@ -1,5 +1,7 @@
 package com.book.bean;
 
+import java.text.SimpleDateFormat;
+
 public class Book {
     private long book_id;
     private String book_name;
@@ -128,13 +130,14 @@ public class Book {
     }
     @Override
     public String toString(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return "Book{"+
         "book_id="+book_id+
         ",author_id="+author_id+
         ",cover="+cover+
         ",introduce="+introduce+
         ",book_type="+book_type+
-        ",create_time="+(create_time!=null?create_time.toLocaleString():"__NULL__")+
+        ",create_time="+sdf.format(create_time)+
         ",all_varcharacter="+all_varcharacter+
         ",book_status="+book_status+
         ",write_status="+write_status+

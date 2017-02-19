@@ -26,6 +26,7 @@ public class RedisUtils {
     public void setObject(Object obj){
 
     }
+
     public JedisPool getPool() {
         return pool;
     }
