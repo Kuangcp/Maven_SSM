@@ -1,32 +1,28 @@
-/*
 package redis;
 
 import com.test.bean.RedisUserDao;
 import com.test.bean.User;
 import org.junit.Assert;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
 import java.util.ArrayList;
 import java.util.List;
 
-*/
 /**
  * Created by Myth on 2017/2/15 0015
- *//*
+ */
 
 @ContextConfiguration(locations = {"classpath*:application.xml"})
 public class RedisTest extends AbstractJUnit4SpringContextTests {
-    @Autowired
+//    @Autowired
     private RedisUserDao redisUserDao;
 
-    */
 /**
      * 新增
      * <br>------------------------------<br>
-     *//*
+     */
 
     @Test
     public void testAddUser() {
@@ -37,11 +33,10 @@ public class RedisTest extends AbstractJUnit4SpringContextTests {
         Assert.assertTrue(result);
     }
 
-    */
 /**
      * 批量新增 普通方式
      * <br>------------------------------<br>
-     *//*
+     */
 
     @Test
     public void testAddUsers1() {
@@ -59,11 +54,12 @@ public class RedisTest extends AbstractJUnit4SpringContextTests {
         System.out.println(System.currentTimeMillis() -  begin);
     }
 
-    */
-/**
+/*
+*
      * 批量新增 pipeline方式
      * <br>------------------------------<br>
-     *//*
+
+*/
 
     @Test
     public void testAddUsers2() {
@@ -80,11 +76,12 @@ public class RedisTest extends AbstractJUnit4SpringContextTests {
         Assert.assertTrue(result);
     }
 
-    */
-/**
+/*
+*
      * 修改
      * <br>------------------------------<br>
-     *//*
+
+*/
 
     @Test
     public void testUpdate() {
@@ -95,23 +92,25 @@ public class RedisTest extends AbstractJUnit4SpringContextTests {
         Assert.assertTrue(result);
     }
 
-    */
-/**
+/*
+*
      * 通过key删除单个
      * <br>------------------------------<br>
-     *//*
+
+*/
 
     @Test
     public void testDelete() {
         String key = "user1";
         redisUserDao.delete(key);
     }
+/*
 
-    */
-/**
+*
      * 批量删除
      * <br>------------------------------<br>
-     *//*
+
+*/
 
     @Test
     public void testDeletes() {
@@ -122,11 +121,12 @@ public class RedisTest extends AbstractJUnit4SpringContextTests {
         redisUserDao.delete(list);
     }
 
-    */
-/**
+/*
+*
      * 获取
      * <br>------------------------------<br>
-     *//*
+
+*/
 
     @Test
     public void testGetUser() {
@@ -136,14 +136,14 @@ public class RedisTest extends AbstractJUnit4SpringContextTests {
         Assert.assertEquals(user.getName(), "java2000_wl");
     }
 
-    */
-/**
+/*
+*
      * 设置redisUserDao
      * @param redisUserDao the redisUserDao to set
-     *//*
+
+*/
 
     public void setredisUserDao(RedisUserDao redisUserDao) {
         this.redisUserDao = redisUserDao;
     }
 }
-*/

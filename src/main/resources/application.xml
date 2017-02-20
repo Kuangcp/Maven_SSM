@@ -3,6 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
          http://www.springframework.org/schema/beans/spring-beans.xsd
          http://www.springframework.org/schema/context
@@ -57,7 +58,7 @@
     <context:property-placeholder location="classpath:redis.properties" ignore-unresolvable="true"/>
 
     <bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
-        <property name="maxIdle" value="${redis.pool.maxIdle}" />
+        <property name="maxIdle" value="${redis.pool.maxIdle}"/>
         <property name="minIdle" value="${redis.pool.minIdle}"/>
         <property name="maxTotal" value="${redis.pool.maxActive}" />
         <property name="maxWaitMillis" value="${redis.pool.maxWait}" />
@@ -65,28 +66,22 @@
         <property name="testOnReturn" value="${redis.pool.testOnReturn}"/>
     </bean>
 
-    <!--<bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+    <!--配置工厂，但是不知道为什么就是加载不了配置文件的属性-->
+    <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
           p:host-name="${redis.host}" p:port="${redis.port}"  p:pool-config-ref="poolConfig"/>
 
     <bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
         <property name="connectionFactory"   ref="connectionFactory" />
-    </bean>-->
+    </bean>
 
     <!--
         配置一个Jedis的池，自动注入到工具类中，自己封装，关于Spring的Template以后学习，博大精深
     -->
-    <!--<bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
-        <property name="maxTotal" value="4096"/>
-        <property name="maxIdle" value="200"/>
-        <property name="maxWaitMillis" value="3000"/>
-        <property name="testOnBorrow" value="true"/>
-        <property name="testOnReturn" value="true"/>
-    </bean>-->
     <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
         <constructor-arg index="0" ref="poolConfig"/>
         <constructor-arg index="1" value="${redis.host}"/>
-        <constructor-arg index="2" value="${redis.port}" type="int"/>
-        <constructor-arg index="3" value="${redis.timeout}" type="int"/>
+        <!--<constructor-arg index="2" value="${redis.port}" type="int"/>
+        <constructor-arg index="3" value="${redis.timeout}" type="int"/>-->
         <!--<constructor-arg index="4" value="${redis.password}"/>-->
     </bean>
 
