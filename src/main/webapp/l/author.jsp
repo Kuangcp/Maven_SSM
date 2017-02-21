@@ -13,8 +13,7 @@
     //从缓存中加载数据
     RedisUtils redisUtil = (RedisUtils)context.getBean("redisUtils");
     Jedis jedis = redisUtil.getConnect();
-    //System.out.println(jedis.get("BookFatherType"));
-//    List<String> types = jedis.lrange("BookFatherType",0,-1);
+
 
     //获取消息的数据
     Map<String,List<Messages>> messagesList= null;
@@ -142,7 +141,7 @@
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
                     <a class="dropdown-item" href="#" onclick="item_tran('0')">个人中心</a>
                     <a class="dropdown-item" href="#">文档帮助</a>
-                    <a class="dropdown-item" href="<%=Path%>/user/logout">注销登录</a>
+                    <a class="dropdown-item" href="<%=Path%>/user/logout/author">注销登录</a>
                 </div>
             </li>
         </ul>
@@ -276,7 +275,7 @@
                 <%}%>
             </div>
 
-            <%--查看消息发送消息--%>
+   <%--查看最近30条消息发送消息--%>
             <div class="" id="SendMessage">
                 <%for (String Re_name:SendNames){  String name = Re_name.split("#")[0]; List<Messages> list = messagesList.get(Re_name);%>
                     <div id="history_<%=name%>" class="historychat invisible">

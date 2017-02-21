@@ -15,14 +15,15 @@
     RedisUtils redisUtil = (RedisUtils)context.getBean("redisUtils");
     Jedis jedis = redisUtil.getConnect();
     List<String> types = jedis.lrange("BookFatherType",0,-1);
-    for(int i=0;i<types.size();i++){
-        System.out.println("|"+types.get(i)+"|");
-        List type = jedis.lrange(types.get(i),0,-1);
-        for (int j=0;j<type.size();j++){
-            System.out.println(j+"/"+type.get(j)+"/");
-        }
-    }
-    jedis.disconnect();
+//    for(int i=0;i<types.size();i++){
+//        System.out.println("|"+types.get(i)+"|");
+//        List type = jedis.lrange(types.get(i),0,-1);
+//        for (int j=0;j<type.size();j++){
+//            System.out.println(j+"/"+type.get(j)+"/");
+//        }
+//    }
+    System.out.println("父类型 : "+types.size());
+    jedis.close();
     u = (Users)session.getAttribute("user");
     if(u!=null){
         user_id = u.getUser_id();
@@ -145,7 +146,7 @@
                     <a class="dropdown-item" href="">个人中心</a>
                     <a class="dropdown-item" href="">会员充值</a>
                     <a class="dropdown-item" href="#">文档帮助</a>
-                    <a class="dropdown-item" href="<%=Path%>/user/logout">注销登录</a>
+                    <a class="dropdown-item" href="<%=Path%>/user/logout/user">注销登录</a>
                 </div>
             </li>
             <%}%>

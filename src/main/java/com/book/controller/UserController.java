@@ -6,21 +6,24 @@ import com.book.bean.Users;
 import com.book.dao.AuthorDao;
 import com.book.dao.MessageDao;
 import com.book.dao.UserDao;
+import com.book.redis.RedisUtils;
+import com.book.service.MessageService;
 import com.book.service.UserService;
 import com.book.util.GetRunTime;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.Pipeline;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Myth on 2017/1/25 0025
@@ -34,16 +37,26 @@ public class UserController {
     @Autowired
     UserService userService;
     @Autowired
+    MessageService messageService;
+    @Autowired
     UserDao userDao;
     @Autowired
     AuthorDao authorDao;
     @Autowired
     MessageDao messageDao;
-
-
+    @Autowired
+    RedisUtils redisUtils;
 
     private static org.slf4j.Logger Log = LoggerFactory.getLogger(UserController.class);
 
+    /**
+     * 常规的登录跳转
+     * @param users
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public ModelAndView login(@ModelAttribute Users users, HttpServletRequest request, HttpServletResponse response)throws Exception{
         HttpSession session = request.getSession();
@@ -71,29 +84,37 @@ public class UserController {
         Log.info("执行结果："+id+"__"+users.toString());
         return view;
     }
-    @RequestMapping("/logout")
-    public ModelAndView logout(HttpSession session){
 
+    /**
+     * 所有用户下线，Session销毁的函数
+     * @param session
+     * @return
+     */
+    @RequestMapping("/logout/{type}")
+    public ModelAndView logout(@PathVariable("type") String type, HttpSession session){
         String viewName="login";
+
         String name="";
         Users u = (Users)session.getAttribute("user");
         Author a = (Author)session.getAttribute("author");
         Log.info("_"+a+"_"+u);
+        Jedis jedis = redisUtils.getConnect();
         if(u==null && a==null){
             name="当前没有用户在线，下线失败";
         }
-        if(u!=null){
+        if("user".equals(type)&& u!=null){
             viewName="index";
             name=u.getName();
+            ClearRedis(jedis,u.getUser_id());
             session.removeAttribute("user");
-        }else if(a!=null){
-            viewName="login";
+        }else if("author".equals(type)&&a!=null){
             name=a.getName();
+            ClearRedis(jedis,a.getAuthor_id());
             session.removeAttribute("author");
         }
-
-        Log.info("注销登录 : _"+name+"_");
-        ModelAndView view = new ModelAndView(viewName);
+        jedis.disconnect();
+        Log.info("注销登录 : ["+name+"] 视图名："+viewName);
+        ModelAndView view = new ModelAndView("redirect:/l/"+viewName+".jsp");
         return view;
     }
 
@@ -110,7 +131,7 @@ public class UserController {
         String email = users.getEmail();
         String pass = users.getPassword();
         String inputCode = request.getParameter("code").toUpperCase();
-        Log.info("用户输入验证码:"+inputCode);
+        Log.info("ajax____用户输入验证码:"+inputCode);
 
         //验证验证码的逻辑，注释就验证码失效
 //        if (inputCode != null && inputCode.equals(code)) {
@@ -119,11 +140,13 @@ public class UserController {
             String result = id + "";
             if (result.length() == 10 && sex==1) {//作家
                 Author a = (Author)authorDao.getOne(id);
+                InitUserMessageList(a.getAuthor_id(),0);
                 Log.info("作家__"+a.toString());
                 session.setAttribute("author",a);
                 return "1";
             } else if (result.length() == 12 && sex==0) {//用户
                 Users u = (Users) userDao.getOne(id);
+                InitUserMessageList(u.getUser_id(),0);
                 Log.info("用户__"+u.toString());
                 session.setAttribute("user", u);
                 return "1";
@@ -148,6 +171,12 @@ public class UserController {
         return code;
     }
 
+    /**
+     * 改作家资料
+     * @param author
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/update_author")
     @ResponseBody
     public String update(@ModelAttribute Author author)throws Exception{
@@ -161,6 +190,12 @@ public class UserController {
         return result;
     }
 
+    /**
+     * 获取未读消息的数目 方便显示
+     * @param session
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/getMessageNum")
     @ResponseBody
     public String getNums(HttpSession session)throws Exception{
@@ -178,6 +213,39 @@ public class UserController {
             return "";
         }
     }
+
+    /**
+     * 初始化消息列表，只将部分放入redis中，其余的到历史消息中分页查看
+     */
+    public void InitUserMessageList(long id,int read){
+        Jedis jedis = redisUtils.getConnect();
+        // 使用管道，提高效率
+        Pipeline pipelined = jedis.pipelined();
+        Map<String,List<Messages>> messageList =  messageService.getMessageList(id,read);
+        Set<String> SendNames_id = messageList.keySet();
+        // 当前用户和 所有 有消息来往的映射
+        ClearRedis(jedis,id);
+        for(String name:SendNames_id){
+            pipelined.lpush(""+id,name);
+            List<Messages> messages = messageList.get(name);
+            for (Messages  m:messages){
+                pipelined.lpush(name,m.getSend()+"|///|"+m.getMessage());
+            }
+        }
+        //管道提交
+        pipelined.sync();
+        jedis.close();
+
+    }
+    // 删除指定用户id的所有消息记录缓存
+    public void ClearRedis(Jedis jedis, long id){
+        List<String>list = jedis.lrange(""+id,0,-1);
+        for(String key:list){
+            jedis.del(key);
+        }
+        jedis.del(""+id);
+    }
+
     public GetRunTime getTime() {
         return Time;
     }
@@ -216,5 +284,21 @@ public class UserController {
 
     public void setMessageDao(MessageDao messageDao) {
         this.messageDao = messageDao;
+    }
+
+    public RedisUtils getRedisUtils() {
+        return redisUtils;
+    }
+
+    public void setRedisUtils(RedisUtils redisUtils) {
+        this.redisUtils = redisUtils;
+    }
+
+    public MessageService getMessageService() {
+        return messageService;
+    }
+
+    public void setMessageService(MessageService messageService) {
+        this.messageService = messageService;
     }
 }

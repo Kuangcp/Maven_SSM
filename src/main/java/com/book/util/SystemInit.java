@@ -42,6 +42,7 @@ public class SystemInit implements ServletContextListener {
         JedisPool pool = (JedisPool)context.getBean("jedisPool");
         Jedis jedis  = pool.getResource();
         initTypes(jedis);
+        jedis.close();
 
 //        System.out.println("缓存结果 : "+cache.get("u"));
     }
@@ -49,7 +50,8 @@ public class SystemInit implements ServletContextListener {
 //    初始化类别的方法
 // 将类别-父类键值对 和 父类-子类键值对放入
     public void initTypes(Jedis jedis){
-        jedis.del("BookFatherType");
+        jedis.flushDB();//清除当前数据库所有key
+//        jedis.del("BookFatherType");
         bookService = (BookService) context.getBean("bookService");
         List<FatherType> list = bookService.getAllTypes();
         int FatherSize = list.size();
@@ -59,7 +61,7 @@ public class SystemInit implements ServletContextListener {
             jedis.lpush("BookFatherType",fatherType.getType_name());
             List<BookType> types = fatherType.getBookTypes();
             int TypeSize = types.size();
-            jedis.del(fatherType.getType_name());
+//            jedis.del(fatherType.getType_name());
             for(int j=TypeSize-1;j>=0;j--){
                 jedis.lpush(fatherType.getType_name(),types.get(j).getType_name());
             }

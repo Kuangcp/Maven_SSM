@@ -12,7 +12,7 @@ import java.util.Map;
 @Repository
 public class MessageDao extends BaseDaoImpl<Messages,Long>{
     /**
-     * 获取所有未读消息总数
+     * 获取当前用户所有未读消息总数
      * @param id
      * @return
      */
@@ -20,6 +20,12 @@ public class MessageDao extends BaseDaoImpl<Messages,Long>{
         return getSession().selectOne("myth.book.NoReadNums",id);
     }
 
+    /**
+     * 获取当前用户对单个用户的未读消息
+     * @param receive_id
+     * @param send_id
+     * @return
+     */
     public int getNoReadNum(long receive_id,long send_id){
         Map param = new HashMap();
         param.put("receive",receive_id);

@@ -19,7 +19,13 @@ public class RedisUtils {
     //获取连接
     public Jedis getConnect(){
         //pool = new JedisPool(config,"127.0.0.1");
-        jedis = pool.getResource();
+        try {
+            jedis = pool.getResource();
+        }catch (Exception e){
+            if(jedis!=null) {
+                jedis.close();
+            }
+        }
         return jedis;
     }
 

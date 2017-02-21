@@ -60,11 +60,11 @@ public class MessageService {
     }
 
     /**
-     * 得到用户收到的所有消息
+     * 得到当前用户收到的所有消息集合，因为名字的原因，所以是放在service层
      *
      * @param id 收消息的人的id
      * @param readed 0：未读
-     * @return Map<String,List<MessagesPlus>>
+     * @return Map<String,List<MessagesPlus>> id_name -> List 的结构的数据
      */
     public Map<String,List<Messages>> getMessageList (long id, int readed){
 

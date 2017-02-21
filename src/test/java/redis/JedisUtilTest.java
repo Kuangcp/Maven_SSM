@@ -6,13 +6,11 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
- * Created by Myth on 2017/2/15 0015
+ * Created by Myth on 2017/2/15
+ * 不依赖于Spring的测试Jedis的类
  */
 public class JedisUtilTest {
     JedisPool pool;
@@ -25,9 +23,28 @@ public class JedisUtilTest {
 //   jedis.auth("password");
     }
 
+    // 测试Book应用里的所有key
     @Test
     public void testGet() {
-        System.out.println(jedis.get("u"));
+        //清除所有
+        //jedis.flushDB();
+        System.out.println("Redis 总大小是 : "+jedis.dbSize());
+        Set<String> keys = jedis.keys("*");
+        for(String key:keys){
+            try {
+                System.out.println(key + "<---->" + jedis.get(key));
+            }catch (Exception e){
+                // 当不是最基本的key-value 时就会有异常，所以就要使用List的方式来读取
+                try {
+                    List<String> list = jedis.lrange(key, 0, -1);
+                    for (String l : list) {
+                        System.out.println(key + "<---->" + l);
+                    }
+                }catch (Exception e2){
+                    //如果还有异常，就要使用Map的方式来进行读取
+                }
+            }
+        }
     }
 
     /**
