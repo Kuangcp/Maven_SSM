@@ -6,6 +6,7 @@ import com.book.bean.FatherType;
 import com.book.dao.BookDao;
 import com.book.dao.BookTypeDao;
 import com.book.dao.MybatisSessionFactory;
+import com.book.dao.StaticStatusDao;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Before;
 import org.junit.Test;
@@ -104,4 +105,13 @@ public class TestRunable {
             Log.info("-----------------");
         }
     }
+    //测试静态数据dao的使用 Spring 已经很乱了，加载数据只能在线测试了
+    @Test
+    public void TestStatic()throws Exception{
+        StaticStatusDao daos = (StaticStatusDao)context.getBean("staticStatusDao");
+        String divide = daos.getAll("status_name=redis_divide_char").get(0).toString();
+        Log.info("分隔符是 : "+divide);
+
+    }
+
 }

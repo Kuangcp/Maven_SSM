@@ -2,6 +2,7 @@ package com.book.util;
 
 import com.book.bean.BookType;
 import com.book.bean.FatherType;
+import com.book.dao.StaticStatusDao;
 import com.book.redis.RedisUtils;
 import com.book.service.BookService;
 import org.slf4j.Logger;
@@ -33,7 +34,9 @@ public class SystemInit implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent event) {
         logger.info("初始化系统");
+
         context = WebApplicationContextUtils.getWebApplicationContext(event.getServletContext());
+        StaticStatusDao staticStatusDao = (StaticStatusDao)context.getBean("staticStatusDao");
 
 //        ApplicationContext context = new ClassPathXmlApplicationContext("application.xml");
 //        RedisUtils utils = (RedisUtils) context.getBean("redisUtils");
@@ -42,6 +45,14 @@ public class SystemInit implements ServletContextListener {
         JedisPool pool = (JedisPool)context.getBean("jedisPool");
         Jedis jedis  = pool.getResource();
         initTypes(jedis);
+
+        //设置多数据并列的分隔符
+        try{
+            String divide = staticStatusDao.getAll("status_name=redis_divide_char").get(0).toString();
+            jedis.set("divide_char",divide);
+        }catch (Exception e){
+            logger.info("获取分隔符数据异常");
+        }
         jedis.close();
 
 //        System.out.println("缓存结果 : "+cache.get("u"));

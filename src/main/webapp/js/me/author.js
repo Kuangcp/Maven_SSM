@@ -104,9 +104,9 @@ function setMessageInnerHTML(innerHTML) {
         message+=innerHTML.substr(i,50)+'<br/>';
     }
     if(sendor==mess.send){
-        innerHTML = "<div class='row_box me_box'>"+message+"</div>";
+        innerHTML = "<div class='row_box me_box'>"+message+"</div><br/><br/>";
     }else if(sendor==mess.receive){
-        innerHTML = "<div class='row_box'>"+message+"</div>";
+        innerHTML = "<div class='row_box other_box'>"+message+"</div><br/><br/>";
     }else{
         innerHTML='';
     }
