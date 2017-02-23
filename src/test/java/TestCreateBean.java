@@ -1,4 +1,4 @@
-import com.myth.mysql.TableTurnClass;
+//import com.myth.mysql.TableTurnClass;
 import org.junit.Test;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +13,7 @@ public class TestCreateBean {
     @Test
     public void createBean(){
 
-        TableTurnClass.CreateOneTable("main.java.com.book.bean","com.book.bean","ebook","root","123456","messages",false);
+//        TableTurnClass.CreateOneTable("main.java.com.book.bean","com.book.bean","ebook","root","123456","messages",false);
         //
         //TableTurnClass.CreateAllTable("main.java.com.book.bean","com.book.bean","ebook","root","123456",false);
         log.info("成功");

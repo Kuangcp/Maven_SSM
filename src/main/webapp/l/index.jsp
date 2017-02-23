@@ -14,6 +14,7 @@
     //加载redis缓存中的数据
     RedisUtils redisUtil = (RedisUtils)context.getBean("redisUtils");
     Jedis jedis = redisUtil.getConnect();
+    String home = jedis.get("homepage");
     List<String> types = jedis.lrange("BookFatherType",0,-1);
 //    for(int i=0;i<types.size();i++){
 //        System.out.println("|"+types.get(i)+"|");
@@ -81,7 +82,7 @@
         ajax.post("<%=Path%>/user/ajax_in","email="+email+"&password="+pass+"&code="+code+"&sex=0",function (data) {
             //console.log(data);
             if(data==1){
-                window.location.href="http://localhost/Book/";
+                window.location.href="<%=home%>";
             }else{
                 $('#OUT').html('<span style="color:red">用户名密码或验证码错误</span>');
                 turnCode();
@@ -270,9 +271,9 @@
             <div class="modal-body">
                 <form class="login_form" <%--action="<%=Path%>/user/login" method="post"--%>>
                     <label for="inputEmail" class="sr-only">Email address</label>
-                    <input type="email" id="inputEmail" name="email" class="form-control" placeholder="邮件:" style="width:250px;" required autofocus>
+                    <input type="email" id="inputEmail" name="email" class="form-control" placeholder="邮件:" style="width:250px;" value="15979940275@163.com"required autofocus>
                     <label for="inputPassword" class="sr-only">Password</label>
-                    <input type="password" id="inputPassword" name="password" class="form-control" placeholder="密码:" style="width:250px;" required>
+                    <input type="password" id="inputPassword" name="password" class="form-control" placeholder="密码:" value="12" style="width:250px;" required>
                     <div>
                         <label for="inputCode" class="sr-only">Code</label>
                         <input type="text" id="inputCode" name="code" class="form-control" placeholder="验证码:" style="width:150px;float:left;" required>
