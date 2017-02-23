@@ -219,6 +219,7 @@ public class UserController {
      */
     public void InitUserMessageList(long id,int read){
         Jedis jedis = redisUtils.getConnect();
+        String divide = jedis.get("divide_char");
         // 使用管道，提高效率
         Pipeline pipelined = jedis.pipelined();
         Map<String,List<Messages>> messageList =  messageService.getMessageList(id,read);
@@ -229,7 +230,7 @@ public class UserController {
             pipelined.lpush(""+id,name);
             List<Messages> messages = messageList.get(name);
             for (Messages  m:messages){
-                pipelined.lpush(name,m.getSend()+"|///|"+m.getMessage());
+                pipelined.lpush(name,m.getSend()+divide+m.getMessage());
             }
         }
         //管道提交

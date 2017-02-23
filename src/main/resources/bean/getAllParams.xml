@@ -33,6 +33,9 @@
           <include refid="QueryWithParam"/>
     </select>
 
+    <select id="getAll_Param_Messages" parameterType="map" resultType="StaticStatus">
+        <include refid="QueryWithParam"/>
+    </select>
     <select id="getAll_Param_Users" parameterType="map" resultType="Users">
         select * from users where
         <include refid="QueryWithParam"/>

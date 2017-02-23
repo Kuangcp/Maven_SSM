@@ -72,6 +72,7 @@ public class MessageService {
         Map<String, List<Messages>> result = new HashMap<String, List<Messages>>();
         try {
             List messages = messageDao.getAll("receive=" + id + " and readed=" + readed + " group by send");
+
             for (int i = 0; i < messages.size(); i++) {
                 long temp_id = ((Messages) messages.get(i)).getSend();
                 String send_name = getName(temp_id);

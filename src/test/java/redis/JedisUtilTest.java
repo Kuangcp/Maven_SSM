@@ -1,7 +1,10 @@
 package redis;
 
+import com.myth.time.GetRunTime;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -15,6 +18,8 @@ import java.util.*;
 public class JedisUtilTest {
     JedisPool pool;
     Jedis jedis;
+    GetRunTime time = new GetRunTime();
+    Logger log = LoggerFactory.getLogger(JedisUtilTest.class);
 
     @Before
     public void setUp() {
@@ -23,15 +28,19 @@ public class JedisUtilTest {
 //   jedis.auth("password");
     }
 
-    // 测试Book应用里的所有key
+    // 测试取出Book应用里的所有key耗时
     @Test
     public void testGet() {
         //清除所有
         //jedis.flushDB();
+
         System.out.println("Redis 总大小是 : "+jedis.dbSize());
+
+        time.Start();
         Set<String> keys = jedis.keys("*");
         for(String key:keys){
             try {
+                //jedis.get(key);
                 System.out.println(key + "<---->" + jedis.get(key));
             }catch (Exception e){
                 // 当不是最基本的key-value 时就会有异常，所以就要使用List的方式来读取
@@ -44,6 +53,27 @@ public class JedisUtilTest {
                     //如果还有异常，就要使用Map的方式来进行读取
                 }
             }
+        }
+        time.End("redis 的查询结果：");
+    }
+    //测试插入数据 长KEY的情况
+    @Test
+    public void TestInsert(){
+        jedis.flushDB();
+        time.Start();
+        for(long i=0;i<20000;i++){
+            jedis.lpush("2000000001->200000000"+i,"这是第"+i+"条测试数据，为了测试聊天记录在redis中使用交互");
+            //jedis.set(i+"_KEY",i+"_Value");
+        }
+        time.End("插入数据");
+    }
+    public void TestQuery(){
+
+    }
+    public void Query(String key){
+        List<String> list = jedis.lrange(key,0,-1);
+        for(String row:list){
+            log.info(key+" 对应得到数据是 "+row);
         }
     }
 
