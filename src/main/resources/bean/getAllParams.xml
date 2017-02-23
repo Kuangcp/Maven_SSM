@@ -33,7 +33,7 @@
           <include refid="QueryWithParam"/>
     </select>
 
-    <select id="getAll_Param_Messages" parameterType="map" resultType="StaticStatus">
+    <select id="getAll_Param_StaticStatus" parameterType="map" resultType="StaticStatus">
         <include refid="QueryWithParam"/>
     </select>
     <select id="getAll_Param_Users" parameterType="map" resultType="Users">

@@ -4,6 +4,7 @@
     <title>Search</title>
 </head>
 <body>
+搜索框没有分类，使用ajax同时搜索作家和书籍
 
 </body>
 </html>
