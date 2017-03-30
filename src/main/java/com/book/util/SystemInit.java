@@ -53,6 +53,8 @@ public class SystemInit implements ServletContextListener {
         }catch (Exception e){
             logger.info("获取分隔符数据异常");
         }
+        //设置登录后跳转后的首页URL
+        jedis.set("homepage","index.jsp");
         jedis.close();
 
 //        System.out.println("缓存结果 : "+cache.get("u"));

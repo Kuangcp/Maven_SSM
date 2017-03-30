@@ -14,6 +14,7 @@
     //加载redis缓存中的数据
     RedisUtils redisUtil = (RedisUtils)context.getBean("redisUtils");
     Jedis jedis = redisUtil.getConnect();
+    //获取首页路径
     String home = jedis.get("homepage");
     List<String> types = jedis.lrange("BookFatherType",0,-1);
 //    for(int i=0;i<types.size();i++){

@@ -14,9 +14,9 @@
         select count(*) from messages where receive=#{receive} and send=#{send} and readed=0
     </select>
 
-    <select id="query_Book" parameterType="map" resultMap="Book">
-        select * from book where #{}
-    </select>
+    <!--<select id="query_Book" parameterType="map" resultMap="Book">-->
+        <!--select * from book where #{}-->
+    <!--</select>-->
 
 
 </mapper>
