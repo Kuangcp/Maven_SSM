@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Myth on 2017/2/11 0011
+ * Created by Myth on 2017/2/11 
  */
 @Controller
 @RequestMapping("/book")
@@ -29,7 +29,7 @@ public class BookController {
 
     /**
      * 查询书籍或作家，是自动查询的
-     * @return
+     * @return 
      */
     @RequestMapping("/search/{type}/{value}")
     public ModelAndView Query(@PathVariable("type") String type,@PathVariable("value") String value){
