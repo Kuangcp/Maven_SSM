@@ -5,15 +5,9 @@
 - Springmvc
 - mybatis
 - Spring redis 
-- shiro
-- solr
 - websocket
-- npm activiti
 - maven
-
-
-- 暂时放弃这个项目，使用新的技术重写这个项目 
-- 
+ 
 
 
 ## 思想
@@ -69,4 +63,7 @@
 - redis Key失效时间的问题，一般来说redis里的key都是长期的直到tomcat关闭，要清理就要手动清理
     - 一般说来，redis也是自动存储到硬盘的，所以是不会失效的
 - github 关于User.email  和 user.name 属性的识别问题
-          
+
+- npm activiti
+- shiro
+- solr          
